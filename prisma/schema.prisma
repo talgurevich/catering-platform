@@ -1,0 +1,157 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id            String    @id @default(cuid())
+  name_he       String
+  slug          String    @unique
+  display_order Int       @default(0)
+  created_at    DateTime  @default(now())
+  products      Product[]
+}
+
+model Product {
+  id                 String          @id @default(cuid())
+  name_he            String
+  description_he     String?         @db.Text
+  short_description  String?
+  price              Decimal         @db.Decimal(10, 2)
+  category_id        String
+  category           Category        @relation(fields: [category_id], references: [id], onDelete: Cascade)
+  unit_label         String          // e.g., "16 יח׳", "מגש"
+  prep_time_days     Int             @default(2)
+  ingredients        String?         @db.Text
+  allergens          String[]        @default([])
+  serving_size       String?
+  images             String[]        @default([])
+  is_active          Boolean         @default(true)
+  is_featured        Boolean         @default(false)
+  notes              String?         @db.Text
+  slug               String          @unique
+  max_options_select Int             @default(1) // How many options can be selected (e.g., 2 for "mix 2 types")
+  created_at         DateTime        @default(now())
+  updated_at         DateTime        @updatedAt
+  product_options    ProductOption[]
+  order_items        OrderItem[]
+
+  @@index([category_id])
+  @@index([is_active])
+}
+
+model ProductOption {
+  id             String   @id @default(cuid())
+  product_id     String
+  product        Product  @relation(fields: [product_id], references: [id], onDelete: Cascade)
+  option_name    String   // e.g., "גאודה", "סלט ביצים", "סלמון"
+  price_modifier Decimal  @default(0) @db.Decimal(10, 2) // e.g., +42 for salmon
+  display_order  Int      @default(0)
+  created_at     DateTime @default(now())
+
+  @@index([product_id])
+}
+
+model Order {
+  id                      String      @id @default(cuid())
+  order_number            String      @unique
+  customer_name           String
+  customer_phone          String
+  customer_email          String
+  delivery_address        Json // { address, city, postal_code, coordinates }
+  delivery_date           DateTime
+  delivery_time_slot      String // morning/afternoon/evening
+  special_instructions    String?     @db.Text
+  subtotal                Decimal     @db.Decimal(10, 2)
+  discount_code_id        String?
+  discount_code           DiscountCode? @relation(fields: [discount_code_id], references: [id])
+  discount_amount         Decimal     @default(0) @db.Decimal(10, 2)
+  delivery_fee            Decimal     @default(0) @db.Decimal(10, 2)
+  total                   Decimal     @db.Decimal(10, 2)
+  payment_status          String      @default("pending") // pending/completed/failed
+  payment_transaction_id  String?
+  payplus_invoice_number  String?
+  order_status            String      @default("pending") // pending/confirmed/preparing/delivered/cancelled
+  notes                   String?     @db.Text
+  created_at              DateTime    @default(now())
+  updated_at              DateTime    @updatedAt
+  order_items             OrderItem[]
+
+  @@index([order_number])
+  @@index([customer_phone])
+  @@index([order_status])
+  @@index([delivery_date])
+}
+
+model OrderItem {
+  id                String   @id @default(cuid())
+  order_id          String
+  order             Order    @relation(fields: [order_id], references: [id], onDelete: Cascade)
+  product_id        String
+  product           Product  @relation(fields: [product_id], references: [id])
+  product_name_he   String
+  selected_options  Json     @default("[]") // Array of selected option names: ["גאודה", "סלט ביצים"]
+  quantity          Int
+  price_per_unit    Decimal  @db.Decimal(10, 2) // Base price + option modifiers
+  prep_time_days    Int
+  subtotal          Decimal  @db.Decimal(10, 2)
+  created_at        DateTime @default(now())
+
+  @@index([order_id])
+  @@index([product_id])
+}
+
+model DiscountCode {
+  id               String   @id @default(cuid())
+  code             String   @unique
+  description      String?
+  discount_type    String   // percentage/fixed
+  discount_value   Decimal  @db.Decimal(10, 2)
+  min_order_amount Decimal  @default(0) @db.Decimal(10, 2)
+  valid_from       DateTime
+  valid_until      DateTime
+  usage_limit      Int      @default(0) // 0 = unlimited
+  times_used       Int      @default(0)
+  is_active        Boolean  @default(true)
+  created_at       DateTime @default(now())
+  updated_at       DateTime @updatedAt
+  orders           Order[]
+
+  @@index([code])
+}
+
+model BlockedDate {
+  id         String   @id @default(cuid())
+  date       DateTime @db.Date
+  reason     String?
+  created_at DateTime @default(now())
+
+  @@unique([date])
+}
+
+model DeliveryZone {
+  id                   String   @id @default(cuid())
+  zone_type            String   // postal_code_range/postal_code_list/radius
+  postal_code_start    String?
+  postal_code_end      String?
+  postal_codes         String[] @default([])
+  city_names           String[] @default([])
+  radius_km            Decimal? @db.Decimal(10, 2)
+  delivery_fee_override Decimal? @db.Decimal(10, 2)
+  is_active            Boolean  @default(true)
+  created_at           DateTime @default(now())
+  updated_at           DateTime @updatedAt
+}
+
+model Settings {
+  key        String   @id
+  value      Json
+  updated_at DateTime @updatedAt
+}
