@@ -54,6 +54,11 @@ export async function middleware(request: NextRequest) {
     }
   )
 
+  // Don't check auth on auth callback route
+  if (request.nextUrl.pathname.startsWith('/auth/callback')) {
+    return response
+  }
+
   const {
     data: { user },
   } = await supabase.auth.getUser()
