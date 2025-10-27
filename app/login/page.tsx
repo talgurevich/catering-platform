@@ -2,16 +2,35 @@
 
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
 export default function LoginPage() {
   const router = useRouter()
   const supabase = createClient()
+
+  // Handle OAuth callback with tokens in hash
+  useEffect(() => {
+    const hash = window.location.hash
+    if (hash && hash.includes('access_token')) {
+      // Supabase client will automatically parse hash and set session
+      supabase.auth.getSession().then(({ data }) => {
+        if (data.session) {
+          router.push('/')
+          router.refresh()
+        }
+      })
+    }
+  }, [router, supabase])
 
   const handleGoogleSignIn = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
         redirectTo: `${window.location.origin}/auth/callback`,
+        queryParams: {
+          access_type: 'offline',
+          prompt: 'consent',
+        },
       },
     })
 
