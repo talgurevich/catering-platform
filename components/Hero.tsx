@@ -26,7 +26,7 @@ export default function Hero() {
             </div>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+          <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
             <span className="text-yellow-400">קייטרינג איכותי</span>
             <br />
             <span className="text-white">לכל אירוע ואירוח</span>

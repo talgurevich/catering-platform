@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* About Section */}
           <div>
-            <h3 className="text-xl font-bold mb-4">תחנת הלחם עכו</h3>
+            <h3 className="font-heading text-xl font-bold mb-4">תחנת הלחם עכו</h3>
             <p className="text-gray-400 mb-4">
               קייטרינג איכותי לכל אירוע
             </p>
@@ -21,7 +21,7 @@ export default function Footer() {
 
           {/* Social Links */}
           <div>
-            <h3 className="text-xl font-bold mb-4">עקבו אחרינו</h3>
+            <h3 className="font-heading text-xl font-bold mb-4">עקבו אחרינו</h3>
             <div className="flex gap-4">
               <a
                 href="https://instagram.com"
@@ -55,7 +55,7 @@ export default function Footer() {
 
           {/* Kosher Certification */}
           <div>
-            <h3 className="text-xl font-bold mb-4">כשרות</h3>
+            <h3 className="font-heading text-xl font-bold mb-4">כשרות</h3>
             <div className="inline-block bg-white text-gray-900 px-6 py-3 rounded-lg font-bold text-center">
               <div className="text-lg">כשר למהדרין</div>
               <div className="text-sm text-gray-600 mt-1">בד״ץ העדה החרדית</div>

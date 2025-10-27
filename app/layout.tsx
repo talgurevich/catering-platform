@@ -1,5 +1,20 @@
 import type { Metadata } from "next";
+import { Epilogue, Nunito } from 'next/font/google'
 import "./globals.css";
+
+const epilogue = Epilogue({
+  subsets: ['latin'],
+  weight: ['400', '600', '700', '900'],
+  variable: '--font-epilogue',
+  display: 'swap',
+})
+
+const nunito = Nunito({
+  subsets: ['latin'],
+  weight: ['200', '400', '500', '700'],
+  variable: '--font-nunito',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: "Bread Station Akko - קייטרינג מעכו",
@@ -12,8 +27,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="he" dir="rtl">
-      <body>
+    <html lang="he" dir="rtl" className={`${epilogue.variable} ${nunito.variable}`}>
+      <body className={nunito.className}>
         {children}
       </body>
     </html>

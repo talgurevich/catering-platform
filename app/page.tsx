@@ -30,7 +30,7 @@ export default async function Home() {
                 התפריט שלנו
               </span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            <h2 className="font-heading text-4xl md:text-5xl font-bold text-gray-900 mb-4">
               הקטגוריות שלנו
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
@@ -63,7 +63,7 @@ export default async function Home() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
                 <div className="p-6">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2 group-hover:text-yellow-600 transition-colors">
+                  <h3 className="font-heading text-2xl font-bold text-gray-900 mb-2 group-hover:text-yellow-600 transition-colors">
                     {category.name_he}
                   </h3>
                   <div className="flex items-center text-gray-600 text-sm">
@@ -92,7 +92,7 @@ export default async function Home() {
                 התקשרו עכשיו
               </span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            <h2 className="font-heading text-4xl md:text-5xl font-bold mb-6">
               מוכנים להזמין?
             </h2>
             <p className="text-xl md:text-2xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed">
