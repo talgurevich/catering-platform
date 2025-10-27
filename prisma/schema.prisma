@@ -32,6 +32,7 @@ model Product {
   ingredients        String?         @db.Text
   allergens          String[]        @default([])
   serving_size       String?
+  image_url          String?
   images             String[]        @default([])
   is_active          Boolean         @default(true)
   is_featured        Boolean         @default(false)
