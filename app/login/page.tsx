@@ -12,13 +12,26 @@ export default function LoginPage() {
   useEffect(() => {
     const hash = window.location.hash
     if (hash && hash.includes('access_token')) {
-      // Supabase client will automatically parse hash and set session
-      supabase.auth.getSession().then(({ data }) => {
-        if (data.session) {
-          router.push('/')
-          router.refresh()
-        }
-      })
+      const hashParams = new URLSearchParams(hash.substring(1))
+      const accessToken = hashParams.get('access_token')
+      const refreshToken = hashParams.get('refresh_token')
+
+      if (accessToken && refreshToken) {
+        // Manually set session with tokens from hash
+        supabase.auth.setSession({
+          access_token: accessToken,
+          refresh_token: refreshToken,
+        }).then(({ data, error }) => {
+          if (error) {
+            console.error('Error setting session:', error)
+          } else if (data.session) {
+            // Clear hash and redirect
+            window.location.hash = ''
+            router.push('/')
+            router.refresh()
+          }
+        })
+      }
     }
   }, [router, supabase])
 
