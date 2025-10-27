@@ -32,6 +32,9 @@ export default async function AdminProductsPage() {
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                תמונה
+              </th>
+              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                 שם המוצר
               </th>
               <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -54,6 +57,19 @@ export default async function AdminProductsPage() {
           <tbody className="bg-white divide-y divide-gray-200">
             {products.map((product) => (
               <tr key={product.id} className="hover:bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {product.image_url ? (
+                    <img
+                      src={product.image_url}
+                      alt={product.name_he}
+                      className="h-12 w-12 rounded-lg object-cover"
+                    />
+                  ) : (
+                    <div className="h-12 w-12 rounded-lg bg-gray-200 flex items-center justify-center">
+                      <span className="text-gray-400 text-xs">אין</span>
+                    </div>
+                  )}
+                </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm font-medium text-gray-900">
                     {product.name_he}
