@@ -59,18 +59,16 @@ export async function middleware(request: NextRequest) {
     return response
   }
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  // Only protect admin routes
+  if (request.nextUrl.pathname.startsWith('/admin')) {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
 
-  // Redirect to login if not authenticated and trying to access protected routes
-  if (!user && !request.nextUrl.pathname.startsWith('/login')) {
-    return NextResponse.redirect(new URL('/login', request.url))
-  }
-
-  // Redirect to home if authenticated and trying to access login
-  if (user && request.nextUrl.pathname.startsWith('/login')) {
-    return NextResponse.redirect(new URL('/', request.url))
+    // Redirect to login if not authenticated
+    if (!user) {
+      return NextResponse.redirect(new URL('/login', request.url))
+    }
   }
 
   return response
