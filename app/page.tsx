@@ -1,17 +1,10 @@
 import { createClient } from '@/lib/supabase/server'
-import { isAdmin } from '@/lib/auth/admin'
-import { redirect } from 'next/navigation'
 import Header from '@/components/Header'
 import Link from 'next/link'
 
 export default async function Home() {
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
-
-  // Redirect admins to admin dashboard
-  if (isAdmin(user)) {
-    redirect('/admin')
-  }
 
   return (
     <>
