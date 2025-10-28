@@ -27,7 +27,7 @@ export default function LoginPage() {
           } else if (data.session) {
             // Clear hash and redirect
             window.location.hash = ''
-            router.push('/')
+            router.push('/admin')
             router.refresh()
           }
         })

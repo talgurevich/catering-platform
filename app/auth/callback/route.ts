@@ -8,7 +8,7 @@ export async function GET(request: NextRequest) {
   const origin = requestUrl.origin
 
   if (code) {
-    const response = NextResponse.redirect(`${origin}`)
+    const response = NextResponse.redirect(`${origin}/admin`)
 
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -41,5 +41,5 @@ export async function GET(request: NextRequest) {
   }
 
   // URL to redirect to after sign in process completes
-  return NextResponse.redirect(`${origin}`)
+  return NextResponse.redirect(`${origin}/admin`)
 }
