@@ -11,14 +11,22 @@ interface CategoryPageProps {
   }
 }
 
+// Revalidate every 1 hour (menu data rarely changes)
+export const revalidate = 3600
+// Generate pages dynamically, but cache aggressively
+export const dynamicParams = true
+
 export default async function CategoryPage({ params }: CategoryPageProps) {
+  // Decode the URL-encoded slug
+  const decodedSlug = decodeURIComponent(params.slug)
+
   const category = await prisma.category.findUnique({
-    where: { slug: params.slug },
+    where: { slug: decodedSlug },
     include: {
-      products: {
+      Product: {
         where: { is_active: true },
         include: {
-          product_options: {
+          ProductOption: {
             orderBy: { display_order: 'asc' },
           },
         },
@@ -75,7 +83,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           </h1>
 
           <p className="text-xl text-gray-300">
-            {category.products.length} מוצרים זמינים • בחרו את המועדפים עליכם
+            {category.Product.length} מוצרים זמינים • בחרו את המועדפים עליכם
           </p>
         </div>
 
@@ -98,7 +106,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       {/* Products Grid */}
       <main className="flex-grow bg-gradient-to-b from-white to-gray-50" dir="rtl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          {category.products.length === 0 ? (
+          {category.Product.length === 0 ? (
             <div className="text-center py-20">
               <div className="text-8xl mb-6">🍽️</div>
               <h2 className="font-heading text-2xl font-bold text-gray-900 mb-4">
@@ -113,10 +121,11 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {category.products.map((product) => (
-                <div
+              {category.Product.map((product) => (
+                <Link
                   key={product.id}
-                  className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2"
+                  href={`/products/${product.slug}`}
+                  className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2 block"
                 >
                   {/* Product Image */}
                   <div className="aspect-video bg-gradient-to-br from-yellow-100 to-orange-100 relative overflow-hidden">
@@ -157,28 +166,28 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                     </div>
 
                     {/* Options */}
-                    {product.product_options.length > 0 && (
+                    {product.ProductOption.length > 0 && (
                       <div className="border-t border-gray-100 pt-4 mb-4">
                         <p className="text-sm font-semibold text-gray-700 mb-3">
                           אפשרויות זמינות:
                         </p>
                         <div className="flex flex-wrap gap-2">
-                          {product.product_options.slice(0, 4).map((option) => (
+                          {product.ProductOption.slice(0, 4).map((option) => (
                             <span
                               key={option.id}
                               className="inline-flex items-center px-3 py-1.5 bg-yellow-50 text-yellow-800 text-xs font-medium rounded-full border border-yellow-200"
                             >
                               {option.option_name}
-                              {option.price_modifier > 0 && (
+                              {Number(option.price_modifier) > 0 && (
                                 <span className="mr-1 font-bold">
                                   +₪{option.price_modifier.toString()}
                                 </span>
                               )}
                             </span>
                           ))}
-                          {product.product_options.length > 4 && (
+                          {product.ProductOption.length > 4 && (
                             <span className="inline-flex items-center px-3 py-1.5 bg-gray-100 text-gray-700 text-xs font-medium rounded-full">
-                              +{product.product_options.length - 4} נוספים
+                              +{product.ProductOption.length - 4} נוספים
                             </span>
                           )}
                         </div>
@@ -205,7 +214,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                       </div>
                     )}
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           )}
@@ -268,14 +277,4 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       <Footer />
     </div>
   )
-}
-
-export async function generateStaticParams() {
-  const categories = await prisma.category.findMany({
-    select: { slug: true },
-  })
-
-  return categories.map((category) => ({
-    slug: category.slug,
-  }))
 }

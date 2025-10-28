@@ -5,7 +5,7 @@ export default async function CategoriesPage() {
     orderBy: { display_order: 'asc' },
     include: {
       _count: {
-        select: { products: true }
+        select: { Product: true }
       }
     }
   })
@@ -38,7 +38,7 @@ export default async function CategoriesPage() {
                   {category.name_he}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                  {category._count.products} מוצרים
+                  {category._count.Product} מוצרים
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                   {category.display_order}

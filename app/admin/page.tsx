@@ -5,8 +5,8 @@ import DeleteProductButton from '@/components/admin/DeleteProductButton'
 export default async function AdminProductsPage() {
   const products = await prisma.product.findMany({
     include: {
-      category: true,
-      product_options: {
+      Category: true,
+      ProductOption: {
         orderBy: { display_order: 'asc' }
       }
     },
@@ -79,13 +79,13 @@ export default async function AdminProductsPage() {
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                  {product.category.name_he}
+                  {product.Category.name_he}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                   ₪{product.price.toString()}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                  {product.product_options.length} אפשרויות
+                  {product.ProductOption.length} אפשרויות
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   {product.is_active ? (

@@ -7,7 +7,7 @@ export default async function EditProductPage({ params }: { params: { id: string
     prisma.product.findUnique({
       where: { id: params.id },
       include: {
-        product_options: {
+        ProductOption: {
           orderBy: { display_order: 'asc' }
         }
       }
@@ -32,7 +32,7 @@ export default async function EditProductPage({ params }: { params: { id: string
     notes: product.notes || '',
     max_options_select: product.max_options_select,
     is_active: product.is_active,
-    product_options: product.product_options.map(opt => ({
+    product_options: product.ProductOption.map(opt => ({
       option_name: opt.option_name,
       price_modifier: Number(opt.price_modifier),
     })),

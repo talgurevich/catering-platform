@@ -65,6 +65,7 @@ export async function POST(request: NextRequest) {
         const category = await prisma.category.upsert({
           where: { slug },
           create: {
+            id: crypto.randomUUID(),
             name_he: categoryName,
             slug,
             display_order: categoryOrder++,
@@ -99,6 +100,7 @@ export async function POST(request: NextRequest) {
       // Create product
       const product = await prisma.product.create({
         data: {
+          id: crypto.randomUUID(),
           name_he: productName,
           slug: productSlug,
           price: basePrice,
@@ -109,6 +111,7 @@ export async function POST(request: NextRequest) {
           prep_time_days: 2, // Default
           is_active: true,
           is_featured: false,
+          updated_at: new Date(),
         },
       })
 
@@ -125,6 +128,7 @@ export async function POST(request: NextRequest) {
 
         await prisma.productOption.create({
           data: {
+            id: crypto.randomUUID(),
             product_id: product.id,
             option_name: optionName,
             price_modifier: priceModifier,

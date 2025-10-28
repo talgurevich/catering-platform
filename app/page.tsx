@@ -2,16 +2,26 @@ import { prisma } from '@/lib/prisma'
 import CustomerHeader from '@/components/CustomerHeader'
 import Hero from '@/components/Hero'
 import Footer from '@/components/Footer'
+import AnimatedCategoryCard from '@/components/AnimatedCategoryCard'
 import Link from 'next/link'
 import Image from 'next/image'
+
+// Revalidate every 1 hour (menu data rarely changes)
+export const revalidate = 3600
 
 export default async function Home() {
   const categories = await prisma.category.findMany({
     orderBy: { display_order: 'asc' },
-    include: {
-      products: {
+    select: {
+      id: true,
+      name_he: true,
+      slug: true,
+      Product: {
         where: { is_active: true },
         take: 1,
+        select: {
+          image_url: true,
+        },
       },
     },
   })
@@ -22,18 +32,28 @@ export default async function Home() {
       <Hero />
 
       {/* Categories Section */}
-      <main className="flex-grow bg-gradient-to-b from-gray-50 to-white" dir="rtl">
-        <section id="categories" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <main className="flex-grow relative -mt-20" dir="rtl">
+        {/* Background Image with Parallax Effect */}
+        <div className="fixed inset-0 -z-10" style={{ top: '64px' }}>
+          <Image
+            src="/images/bg2.jpg"
+            alt="Background"
+            fill
+            className="object-cover"
+            style={{ filter: 'blur(6px) brightness(0.4)' }}
+          />
+        </div>
+        <section id="categories" className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center mb-16">
             <div className="inline-block mb-4">
               <span className="px-4 py-2 bg-yellow-400 text-gray-900 rounded-full text-sm font-bold uppercase tracking-wide">
                 התפריט שלנו
               </span>
             </div>
-            <h2 className="font-heading text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            <h2 className="font-heading text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg">
               הקטגוריות שלנו
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-200 max-w-2xl mx-auto drop-shadow-lg">
               בחרו מתוך מגוון רחב של מוצרים איכותיים
               <br className="hidden sm:block" />
               מוכנים במיוחד עבורכם
@@ -41,45 +61,17 @@ export default async function Home() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {categories.map((category) => (
-              <Link
-                key={category.id}
-                href={`/categories/${category.slug}`}
-                className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2"
-              >
-                <div className="aspect-video bg-gradient-to-br from-yellow-100 to-orange-100 relative overflow-hidden">
-                  {category.products[0]?.image_url ? (
-                    <Image
-                      src={category.products[0].image_url}
-                      alt={category.name_he}
-                      fill
-                      className="object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
-                  ) : (
-                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-yellow-200 to-orange-200">
-                      <span className="text-7xl filter drop-shadow-lg">🍽️</span>
-                    </div>
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                </div>
-                <div className="p-6">
-                  <h3 className="font-heading text-2xl font-bold text-gray-900 mb-2 group-hover:text-yellow-600 transition-colors">
-                    {category.name_he}
-                  </h3>
-                  <div className="flex items-center text-gray-600 text-sm">
-                    <span>לחצו לצפייה במוצרים</span>
-                    <svg className="w-4 h-4 mr-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                    </svg>
-                  </div>
-                </div>
-              </Link>
+            {categories.map((category, index) => (
+              <AnimatedCategoryCard key={category.id} category={category} index={index} />
             ))}
           </div>
         </section>
 
         {/* Call to Action */}
-        <section className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white py-20 overflow-hidden">
+        <section className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white py-20 overflow-hidden z-10">
+          {/* Solid background to cover parallax */}
+          <div className="absolute inset-0 bg-gray-900"></div>
+
           {/* Decorative elements */}
           <div className="absolute inset-0 opacity-5">
             <div className="absolute top-0 left-1/4 w-96 h-96 bg-yellow-400 rounded-full filter blur-3xl"></div>

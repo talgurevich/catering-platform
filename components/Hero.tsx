@@ -3,12 +3,13 @@ import Image from 'next/image'
 
 export default function Hero() {
   return (
-    <section className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white overflow-hidden" dir="rtl">
-      {/* Decorative background elements */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-20 right-10 w-72 h-72 bg-yellow-400 rounded-full filter blur-3xl"></div>
-        <div className="absolute bottom-20 left-10 w-96 h-96 bg-blue-400 rounded-full filter blur-3xl"></div>
-      </div>
+    <section
+      className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white overflow-visible pb-20"
+      dir="rtl"
+      style={{
+        clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 60px), 90% calc(100% - 50px), 80% calc(100% - 42px), 70% calc(100% - 36px), 60% calc(100% - 32px), 50% calc(100% - 30px), 40% calc(100% - 32px), 30% calc(100% - 36px), 20% calc(100% - 42px), 10% calc(100% - 50px), 0 calc(100% - 60px))',
+      }}
+    >
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
         <div className="text-center">
@@ -16,21 +17,16 @@ export default function Hero() {
           <div className="mb-8 flex justify-center">
             <div className="relative w-full max-w-4xl">
               <Image
-                src="/images/hero-logo.png"
+                src="/images/breadstation-official-logo.png"
                 alt="Bread Station Bakery"
-                width={1200}
-                height={200}
+                width={900}
+                height={136}
                 className="w-full h-auto"
+                style={{ filter: 'drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3))' }}
                 priority
               />
             </div>
           </div>
-
-          <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            <span className="text-yellow-400">קייטרינג איכותי</span>
-            <br />
-            <span className="text-white">לכל אירוע ואירוח</span>
-          </h1>
 
           <p className="text-lg md:text-xl lg:text-2xl text-gray-300 mb-4 max-w-3xl mx-auto leading-relaxed">
             מגשי אירוח מושקעים • כריכים טריים • מאפים ביתיים
@@ -42,14 +38,23 @@ export default function Hero() {
 
           {/* Features badges */}
           <div className="flex flex-wrap justify-center gap-3 mb-10">
-            <div className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium border border-white/20">
-              ✨ איכות פרימיום
+            <div className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium border border-white/20 flex items-center gap-2">
+              <svg className="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              איכות פרימיום
             </div>
-            <div className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium border border-white/20">
-              🚚 משלוחים לכל הארץ
+            <div className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium border border-white/20 flex items-center gap-2">
+              <svg className="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+              </svg>
+              משלוחים לכל הארץ
             </div>
-            <div className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium border border-white/20">
-              ✅ כשר למהדרין
+            <div className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium border border-white/20 flex items-center gap-2">
+              <svg className="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              כשר למהדרין
             </div>
           </div>
 
@@ -80,21 +85,6 @@ export default function Hero() {
             </a>
           </div>
         </div>
-      </div>
-
-      {/* Enhanced wave */}
-      <div className="absolute bottom-0 left-0 right-0">
-        <svg
-          viewBox="0 0 1440 120"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-full h-auto"
-        >
-          <path
-            d="M0 0L60 10C120 20 240 40 360 46.7C480 53 600 47 720 43.3C840 40 960 40 1080 46.7C1200 53 1320 67 1380 73.3L1440 80V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V0Z"
-            fill="white"
-          />
-        </svg>
       </div>
     </section>
   )

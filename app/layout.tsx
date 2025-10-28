@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Epilogue, Nunito } from 'next/font/google'
 import "./globals.css";
+import { CartProvider } from '@/contexts/CartContext'
 
 const epilogue = Epilogue({
   subsets: ['latin'],
@@ -29,7 +30,9 @@ export default function RootLayout({
   return (
     <html lang="he" dir="rtl" className={`${epilogue.variable} ${nunito.variable}`}>
       <body className={nunito.className}>
-        {children}
+        <CartProvider>
+          {children}
+        </CartProvider>
       </body>
     </html>
   );
