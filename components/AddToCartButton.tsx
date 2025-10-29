@@ -32,14 +32,7 @@ export default function AddToCartButton({ product }: AddToCartButtonProps) {
         // Remove option if already selected
         return prev.filter(id => id !== optionId)
       } else {
-        // For single selection (max_options_select === 1), replace the selection
-        if (product.max_options_select === 1) {
-          return [optionId]
-        }
-        // For multiple selections, add if under limit
-        if (prev.length >= product.max_options_select) {
-          return prev
-        }
+        // Add option (no limit)
         return [...prev, optionId]
       }
     })
@@ -82,39 +75,25 @@ export default function AddToCartButton({ product }: AddToCartButtonProps) {
           <div className="flex items-center justify-between">
             <h3 className="font-heading text-xl font-bold text-gray-900">
               בחרו אפשרויות
-              {product.max_options_select > 1 && (
-                <span className="text-sm font-normal text-gray-600 mr-2">
-                  (ניתן לבחור עד {product.max_options_select})
-                </span>
-              )}
             </h3>
-            {product.max_options_select > 1 && selectedOptions.length > 0 && (
+            {selectedOptions.length > 0 && (
               <span className="text-sm font-bold text-yellow-600">
-                {selectedOptions.length} מתוך {product.max_options_select} נבחרו
+                {selectedOptions.length} נבחרו
               </span>
             )}
           </div>
 
-          {product.max_options_select > 1 && selectedOptions.length >= product.max_options_select && (
-            <div className="p-3 bg-yellow-50 border border-yellow-200 rounded-lg text-sm text-yellow-800">
-              הגעתם למקסימום האפשרויות. בטלו בחירה כדי לבחור אפשרות אחרת.
-            </div>
-          )}
-
           <div className="grid grid-cols-1 gap-2">
             {product.ProductOption.map((option) => {
               const isSelected = selectedOptions.includes(option.id)
-              const isDisabled = !isSelected && selectedOptions.length >= product.max_options_select
 
               return (
                 <label
                   key={option.id}
-                  className={`flex items-center justify-between p-4 border-2 rounded-xl transition-all ${
+                  className={`flex items-center justify-between p-4 border-2 rounded-xl transition-all cursor-pointer ${
                     isSelected
                       ? 'border-yellow-400 bg-yellow-50'
-                      : isDisabled
-                      ? 'border-gray-200 bg-gray-50 opacity-50 cursor-not-allowed'
-                      : 'border-gray-200 hover:border-gray-300 cursor-pointer'
+                      : 'border-gray-200 hover:border-gray-300'
                   }`}
                 >
                   <div className="flex items-center gap-3">
@@ -122,15 +101,14 @@ export default function AddToCartButton({ product }: AddToCartButtonProps) {
                       type="checkbox"
                       checked={isSelected}
                       onChange={() => handleOptionToggle(option.id)}
-                      disabled={isDisabled}
-                      className="w-5 h-5 text-yellow-400 border-gray-300 rounded focus:ring-yellow-400 disabled:opacity-50"
+                      className="w-5 h-5 text-yellow-400 border-gray-300 rounded focus:ring-yellow-400"
                     />
-                    <span className={`font-medium ${isDisabled ? 'text-gray-500' : 'text-gray-900'}`}>
+                    <span className="font-medium text-gray-900">
                       {option.option_name}
                     </span>
                   </div>
                   {Number(option.price_modifier) > 0 && (
-                    <span className={`font-bold ${isDisabled ? 'text-gray-500' : 'text-yellow-600'}`}>
+                    <span className="font-bold text-yellow-600">
                       +₪{option.price_modifier.toString()}
                     </span>
                   )}
