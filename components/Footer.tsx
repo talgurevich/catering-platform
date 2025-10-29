@@ -51,7 +51,7 @@ export default function Footer() {
                 <FaFacebookF className="text-xl" />
               </a>
               <a
-                href="https://wa.me/972"
+                href="https://wa.me/972502670040"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-green-600 transition-colors"

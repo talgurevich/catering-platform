@@ -71,7 +71,7 @@ export default function Hero() {
               </span>
             </Link>
             <a
-              href="https://wa.me/972"
+              href="https://wa.me/972502670040"
               target="_blank"
               rel="noopener noreferrer"
               className="group w-full sm:w-auto px-10 py-4 bg-green-500 text-white rounded-xl font-bold text-lg hover:bg-green-600 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105"

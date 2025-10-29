@@ -60,7 +60,7 @@ export default function ContactPage() {
 
             {/* WhatsApp */}
             <a
-              href="https://wa.me/972"
+              href="https://wa.me/972502670040"
               target="_blank"
               rel="noopener noreferrer"
               className="group bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-2xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1"

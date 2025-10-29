@@ -218,7 +218,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </p>
                 <div className="flex gap-3">
                   <a
-                    href="https://wa.me/972"
+                    href="https://wa.me/972502670040"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 px-4 py-3 bg-green-500 text-white rounded-xl font-bold text-center hover:bg-green-600 transition-colors"

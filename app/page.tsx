@@ -142,7 +142,7 @@ export default async function Home() {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <a
-                href="https://wa.me/972"
+                href="https://wa.me/972502670040"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group w-full sm:w-auto px-10 py-5 bg-green-500 text-white rounded-xl font-bold text-xl hover:bg-green-600 transition-all duration-300 shadow-2xl hover:shadow-green-500/50 hover:scale-105"
