@@ -67,6 +67,53 @@ export default async function Home() {
           </div>
         </section>
 
+        {/* Photo Gallery */}
+        <section className="relative bg-white py-20 overflow-hidden z-10">
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" dir="rtl">
+            <div className="text-center mb-12">
+              <div className="inline-block mb-4">
+                <span className="px-4 py-2 bg-yellow-400 text-gray-900 rounded-full text-sm font-bold uppercase tracking-wide">
+                  הגלריה שלנו
+                </span>
+              </div>
+              <h2 className="font-heading text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                יצירות הקולינריה שלנו
+              </h2>
+              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                צפו בחלק מהיצירות המיוחדות שהכנו ללקוחותינו
+              </p>
+            </div>
+
+            {/* Photo Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {[
+                '542837829_17961639512986841_2312727096503185245_n.jpg',
+                '543625603_17961639524986841_5321992921417068583_n.jpg',
+                '543832787_17961639494986841_9185817756925403653_n.jpg',
+                '544063579_17961639536986841_7180375979830562603_n.jpg',
+                '544311005_17961639587986841_4198606928848641434_n.jpg',
+                '544872796_17961639596986841_8518637241744614031_n.jpg',
+                '545249491_17961639605986841_2401462299661618795_n.jpg',
+                '555466071_727589330336883_6661027141450470502_n.jpg',
+              ].map((photo, index) => (
+                <div
+                  key={photo}
+                  className="group relative aspect-square overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300"
+                >
+                  <Image
+                    src={`/images/gallery/${photo}`}
+                    alt={`תחנת הלחם עכו - תמונה ${index + 1}`}
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-500"
+                    sizes="(max-width: 768px) 50vw, 25vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Call to Action */}
         <section className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white py-20 overflow-hidden z-10">
           {/* Solid background to cover parallax */}
