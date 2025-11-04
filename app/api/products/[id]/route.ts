@@ -61,6 +61,7 @@ export async function PUT(
       if (options.length > 0) {
         await prisma.productOption.createMany({
           data: options.map((opt: any, index: number) => ({
+            id: crypto.randomUUID(),
             product_id: product.id,
             option_name: opt.option_name,
             price_modifier: opt.price_modifier || 0,
