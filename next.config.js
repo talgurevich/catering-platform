@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone',
   images: {
     remotePatterns: [
       {
@@ -10,6 +9,10 @@ const nextConfig = {
       },
     ],
   },
+  // Enable compression
+  compress: true,
+  // Enable React strict mode
+  reactStrictMode: true,
 }
 
 module.exports = nextConfig
