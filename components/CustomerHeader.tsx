@@ -46,12 +46,6 @@ export default function CustomerHeader() {
             >
               אודות
             </Link>
-            <Link
-              href="/contact"
-              className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
-            >
-              צור קשר
-            </Link>
 
             {/* Cart Button */}
             <Link
@@ -147,13 +141,6 @@ export default function CustomerHeader() {
                 onClick={() => setMobileMenuOpen(false)}
               >
                 אודות
-              </Link>
-              <Link
-                href="/contact"
-                className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                צור קשר
               </Link>
             </div>
           </div>
