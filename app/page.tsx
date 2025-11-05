@@ -133,7 +133,7 @@ export default async function Home() {
               </span>
             </div>
             <h2 className="font-heading text-4xl md:text-5xl font-bold mb-6">
-              מוכנים להזמין?
+              מוכנים להזמין? התחילו עכשיו באתר או התקשרו אלינו ישירות
             </h2>
             <p className="text-xl md:text-2xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed">
               צרו איתנו קשר עוד היום ונדאג לכל הפרטים
