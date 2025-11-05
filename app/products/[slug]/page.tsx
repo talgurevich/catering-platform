@@ -12,9 +12,9 @@ interface ProductPageProps {
   }
 }
 
-// Revalidate every 1 hour (product data rarely changes)
+// Force dynamic rendering (ISR at runtime, not build time)
+export const dynamic = 'force-dynamic'
 export const revalidate = 3600
-// Generate pages dynamically, but cache aggressively
 export const dynamicParams = true
 
 export default async function ProductPage({ params }: ProductPageProps) {

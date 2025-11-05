@@ -6,7 +6,8 @@ import AnimatedCategoryCard from '@/components/AnimatedCategoryCard'
 import Link from 'next/link'
 import Image from 'next/image'
 
-// Revalidate every 1 hour (menu data rarely changes)
+// Force dynamic rendering (ISR at runtime, not build time)
+export const dynamic = 'force-dynamic'
 export const revalidate = 3600
 
 export default async function Home() {
