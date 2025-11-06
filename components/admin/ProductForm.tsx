@@ -106,7 +106,8 @@ export default function ProductForm({ categories, initialData }: ProductFormProp
         price: Number(formData.price),
         prep_time_days: Number(formData.prep_time_days),
         max_options_select: Number(formData.max_options_select),
-        slug: `${formData.name_he}-${Date.now()}`,
+        // Only generate new slug for new products
+        ...(initialData?.id ? {} : { slug: `${formData.name_he}-${Date.now()}` }),
         image_url: imageUrl || null,
         options: options.filter(opt => opt.option_name.trim() !== ''),
       }
@@ -124,14 +125,17 @@ export default function ProductForm({ categories, initialData }: ProductFormProp
       })
 
       if (!response.ok) {
-        throw new Error('Failed to save product')
+        const errorData = await response.json()
+        console.error('Server error:', errorData)
+        throw new Error(errorData.details || errorData.error || 'Failed to save product')
       }
 
       router.push('/admin')
       router.refresh()
     } catch (error) {
       console.error('Error saving product:', error)
-      alert('שגיאה בשמירת המוצר')
+      const message = error instanceof Error ? error.message : 'שגיאה לא ידועה'
+      alert(`שגיאה בשמירת המוצר: ${message}`)
     } finally {
       setIsSubmitting(false)
     }

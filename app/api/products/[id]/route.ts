@@ -71,6 +71,7 @@ export async function PUT(
     }
 
     const body = await request.json()
+    console.log('Updating product:', params.id, 'with options:', body.options)
 
     // Extract options from body
     const { options, ...productData } = body
@@ -85,12 +86,14 @@ export async function PUT(
     })
 
     // Delete existing options and create new ones
-    if (options) {
+    if (options !== undefined) {
+      console.log('Deleting existing options for product:', product.id)
       await prisma.productOption.deleteMany({
         where: { product_id: product.id }
       })
 
       if (options.length > 0) {
+        console.log('Creating new options:', options)
         await prisma.productOption.createMany({
           data: options.map((opt: any, index: number) => ({
             id: crypto.randomUUID(),
@@ -100,12 +103,16 @@ export async function PUT(
             display_order: index,
           }))
         })
+        console.log('Options created successfully')
       }
     }
 
     return NextResponse.json({ success: true, product })
   } catch (error) {
     console.error('Error updating product:', error)
-    return NextResponse.json({ error: 'Failed to update product' }, { status: 500 })
+    return NextResponse.json({
+      error: 'Failed to update product',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    }, { status: 500 })
   }
 }
