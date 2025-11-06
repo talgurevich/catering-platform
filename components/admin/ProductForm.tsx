@@ -152,7 +152,7 @@ export default function ProductForm({ categories, initialData }: ProductFormProp
               required
               value={formData.name_he}
               onChange={(e) => setFormData({ ...formData, name_he: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
             />
           </div>
 
@@ -164,7 +164,7 @@ export default function ProductForm({ categories, initialData }: ProductFormProp
               required
               value={formData.category_id}
               onChange={(e) => setFormData({ ...formData, category_id: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
             >
               {categories.map((cat) => (
                 <option key={cat.id} value={cat.id}>
@@ -184,7 +184,7 @@ export default function ProductForm({ categories, initialData }: ProductFormProp
               required
               value={formData.price}
               onChange={(e) => setFormData({ ...formData, price: parseFloat(e.target.value) })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
             />
           </div>
 
@@ -198,7 +198,7 @@ export default function ProductForm({ categories, initialData }: ProductFormProp
               placeholder='למשל: "16 יח׳" או "מגש"'
               value={formData.unit_label}
               onChange={(e) => setFormData({ ...formData, unit_label: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
             />
           </div>
 
@@ -211,7 +211,7 @@ export default function ProductForm({ categories, initialData }: ProductFormProp
               required
               value={formData.prep_time_days}
               onChange={(e) => setFormData({ ...formData, prep_time_days: parseInt(e.target.value) })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
             />
           </div>
 
@@ -224,7 +224,7 @@ export default function ProductForm({ categories, initialData }: ProductFormProp
               min="1"
               value={formData.max_options_select}
               onChange={(e) => setFormData({ ...formData, max_options_select: parseInt(e.target.value) })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
             />
             <p className="text-sm text-gray-500 mt-1">
               כמה אפשרויות הלקוח יכול לבחור (למשל: 2 לשילוב סוגים)
@@ -240,7 +240,7 @@ export default function ProductForm({ categories, initialData }: ProductFormProp
             rows={3}
             value={formData.description_he}
             onChange={(e) => setFormData({ ...formData, description_he: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
           />
         </div>
 
@@ -253,7 +253,7 @@ export default function ProductForm({ categories, initialData }: ProductFormProp
             value={formData.notes}
             onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
             placeholder='למשל: "ניתן לשלב 2 סוגים במגש"'
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
           />
         </div>
 
@@ -342,7 +342,7 @@ export default function ProductForm({ categories, initialData }: ProductFormProp
                     placeholder="שם האפשרות (למשל: גאודה, סלמון)"
                     value={option.option_name}
                     onChange={(e) => updateOption(index, 'option_name', e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                   />
                 </div>
                 <div className="w-32">
@@ -352,7 +352,7 @@ export default function ProductForm({ categories, initialData }: ProductFormProp
                     placeholder="תוספת מחיר"
                     value={option.price_modifier}
                     onChange={(e) => updateOption(index, 'price_modifier', parseFloat(e.target.value) || 0)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                   />
                 </div>
                 <button
