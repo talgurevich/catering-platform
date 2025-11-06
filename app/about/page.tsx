@@ -120,7 +120,7 @@ export default function AboutPage() {
               כשרות למהדרין
             </h2>
             <p className="text-xl text-gray-300 mb-2">
-              בד״ץ העדה החרדית
+              רבנות עכו
             </p>
             <p className="text-gray-400 max-w-2xl mx-auto">
               כל המוצרים שלנו מיוצרים תחת השגחה קפדנית ועומדים בסטנדרטים הגבוהים ביותר של כשרות
