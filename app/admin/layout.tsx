@@ -37,6 +37,12 @@ export default async function AdminLayout({
               ➕ מוצר חדש
             </Link>
             <Link
+              href="/admin/bundles"
+              className="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
+            >
+              🎁 חבילות
+            </Link>
+            <Link
               href="/admin/import"
               className="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
             >
