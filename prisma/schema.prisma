@@ -152,3 +152,27 @@ model Settings {
   value      Json
   updated_at DateTime
 }
+
+model Bundle {
+  id                String   @id
+  name_he           String
+  slug              String   @unique
+  short_description String?
+  full_description  String
+  price             Decimal  @db.Decimal(10, 2)
+  serves_people     Int?
+  image_url         String?
+  images            String[] @default([])
+  included_items    Json     @default("[]")
+  optional_extras   Json     @default("[]")
+  is_active         Boolean  @default(true)
+  is_featured       Boolean  @default(false)
+  display_order     Int      @default(0)
+  prep_time_days    Int      @default(2)
+  notes             String?
+  created_at        DateTime @default(now())
+  updated_at        DateTime
+
+  @@index([is_active])
+  @@index([display_order])
+}
