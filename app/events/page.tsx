@@ -2,13 +2,25 @@ import CustomerHeader from '@/components/CustomerHeader'
 import Footer from '@/components/Footer'
 import Image from 'next/image'
 import Link from 'next/link'
+import { prisma } from '@/lib/prisma'
 
 export const metadata = {
   title: 'חבילות ואירועים | BreadStation Akko',
   description: 'חבילות קייטרינג ומגשי אירוח לכל סוגי האירועים - ימי הולדת, אירועים עסקיים, חגיגות משפחתיות ועוד',
 }
 
-export default function EventsPage() {
+export const dynamic = 'force-dynamic'
+
+export default async function EventsPage() {
+  // Fetch active bundles
+  const bundles = await prisma.bundle.findMany({
+    where: { is_active: true },
+    orderBy: [
+      { is_featured: 'desc' },
+      { display_order: 'asc' },
+      { created_at: 'desc' }
+    ]
+  })
   const eventTypes = [
     {
       icon: '🎂',
@@ -119,6 +131,105 @@ export default function EventsPage() {
           </svg>
         </div>
       </section>
+
+      {/* Bundles Section */}
+      {bundles.length > 0 && (
+        <section className="bg-white py-20" dir="rtl">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <div className="inline-block mb-4">
+                <span className="px-4 py-2 bg-yellow-400 text-gray-900 rounded-full text-sm font-bold uppercase tracking-wide">
+                  החבילות שלנו
+                </span>
+              </div>
+              <h2 className="font-heading text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                חבילות אירוח מוכנות
+              </h2>
+              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                חבילות מושלמות לכל סוג של אירוע - הכל כלול ומוכן
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {bundles.map((bundle) => (
+                <Link
+                  key={bundle.id}
+                  href={`/bundles/${bundle.slug}`}
+                  className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2 block"
+                >
+                  {/* Bundle Image */}
+                  <div className="aspect-video bg-gradient-to-br from-yellow-100 to-orange-100 relative overflow-hidden">
+                    {bundle.image_url ? (
+                      <Image
+                        src={bundle.image_url}
+                        alt={bundle.name_he}
+                        fill
+                        className="object-cover group-hover:scale-110 transition-transform duration-500"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-yellow-200 to-orange-200">
+                        <span className="text-7xl filter drop-shadow-lg">🎁</span>
+                      </div>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                    {/* Featured badge */}
+                    {bundle.is_featured && (
+                      <div className="absolute top-4 right-4 px-4 py-2 bg-yellow-400 text-gray-900 rounded-full text-sm font-bold shadow-lg">
+                        מומלץ
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Bundle Info */}
+                  <div className="p-6">
+                    <h3 className="font-heading text-2xl font-bold text-gray-900 mb-3 group-hover:text-yellow-600 transition-colors">
+                      {bundle.name_he}
+                    </h3>
+
+                    {bundle.short_description && (
+                      <p className="text-gray-600 text-sm mb-4 line-clamp-3 leading-relaxed">
+                        {bundle.short_description}
+                      </p>
+                    )}
+
+                    <div className="flex items-baseline gap-2 mb-5">
+                      <span className="text-3xl font-bold text-gray-900">
+                        ₪{bundle.price.toString()}
+                      </span>
+                      {bundle.serves_people && (
+                        <span className="text-gray-500 text-sm">
+                          / ל-{bundle.serves_people} אנשים
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Prep Time Notice */}
+                    {bundle.prep_time_days > 0 && (
+                      <div className="flex items-center text-sm text-gray-500 bg-gray-50 px-3 py-2 rounded-lg">
+                        <svg
+                          className="w-4 h-4 ml-2"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
+                        </svg>
+                        זמן הכנה: {bundle.prep_time_days} ימים מראש
+                      </div>
+                    )}
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Event Types Section */}
       <section className="bg-white py-20" dir="rtl">
