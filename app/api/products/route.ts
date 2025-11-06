@@ -19,7 +19,11 @@ export async function POST(request: NextRequest) {
 
     // Create product
     const product = await prisma.product.create({
-      data: productData
+      data: {
+        ...productData,
+        id: crypto.randomUUID(),
+        updated_at: new Date(),
+      }
     })
 
     // Create options if provided
