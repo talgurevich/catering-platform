@@ -68,7 +68,7 @@ export default function Hero() {
               className="group w-full sm:w-auto px-10 py-4 bg-yellow-400 text-gray-900 rounded-xl font-bold text-lg hover:bg-yellow-300 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105"
             >
               <span className="flex items-center justify-center gap-2">
-                צפו בתפריט המלא
+                הזמינו כאן
                 <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                 </svg>
