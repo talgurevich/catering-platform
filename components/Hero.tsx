@@ -25,6 +25,10 @@ export default function Hero() {
                 style={{ filter: 'drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3))' }}
                 priority
               />
+              {/* Corner banner */}
+              <div className="absolute top-4 left-4 bg-yellow-400 text-gray-900 px-4 py-2 font-bold text-lg rounded-lg shadow-lg transform -rotate-6 border-2 border-gray-900">
+                עכו
+              </div>
             </div>
           </div>
 
