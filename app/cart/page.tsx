@@ -382,14 +382,21 @@ export default function CartPage() {
                   </div>
 
                   <div className="flex items-center justify-between text-gray-600">
-                    <span>סכום ביניים:</span>
-                    <span className="font-bold">₪{totalPrice.toFixed(2)}</span>
+                    <span>סכום ביניים (לפני מע״מ):</span>
+                    <span className="font-bold">₪{((totalPrice + deliveryFee) / 1.18).toFixed(2)}</span>
+                  </div>
+
+                  <div className="flex items-center justify-between text-gray-600">
+                    <span>מע״מ (18%):</span>
+                    <span className="font-bold">
+                      ₪{((totalPrice + deliveryFee) - ((totalPrice + deliveryFee) / 1.18)).toFixed(2)}
+                    </span>
                   </div>
 
                   <div className="flex items-center justify-between text-gray-600">
                     <span>דמי משלוח:</span>
                     <span className="font-bold">
-                      {deliveryFee === 0 ? 'חינם' : `₪${deliveryFee.toFixed(2)}`}
+                      {deliveryFee === 0 ? 'כלול במחיר' : `כלול במחיר`}
                     </span>
                   </div>
 
