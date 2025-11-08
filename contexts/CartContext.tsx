@@ -173,11 +173,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0)
 
   const totalPrice = items.reduce((sum, item) => {
-    const optionsPrice = item.selectedOptions.reduce(
-      (optSum, opt) => optSum + opt.price_modifier,
-      0
-    )
-    return sum + (item.price + optionsPrice) * item.quantity
+    // Use the maximum price modifier, not the sum of all modifiers
+    const maxPriceModifier = item.selectedOptions.length > 0
+      ? Math.max(...item.selectedOptions.map(opt => opt.price_modifier))
+      : 0
+    return sum + (item.price + maxPriceModifier) * item.quantity
   }, 0)
 
   // Calculate delivery fee: 50 NIS for outside Akko, free for Akko

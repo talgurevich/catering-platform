@@ -62,10 +62,16 @@ export default function AddToCartButton({ product }: AddToCartButtonProps) {
     setTimeout(() => setShowSuccess(false), 2000)
   }
 
-  const totalPrice = Number(product.price) +
-    product.ProductOption
-      .filter(opt => selectedOptions.includes(opt.id))
-      .reduce((sum, opt) => sum + Number(opt.price_modifier), 0)
+  // Calculate total: base price + highest price modifier (not sum of all)
+  const selectedPriceModifiers = product.ProductOption
+    .filter(opt => selectedOptions.includes(opt.id))
+    .map(opt => Number(opt.price_modifier))
+
+  const maxPriceModifier = selectedPriceModifiers.length > 0
+    ? Math.max(...selectedPriceModifiers)
+    : 0
+
+  const totalPrice = Number(product.price) + maxPriceModifier
 
   return (
     <div className="space-y-6">
