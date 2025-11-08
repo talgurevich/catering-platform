@@ -350,26 +350,23 @@ export default async function EventsPage() {
             </p>
           </div>
 
-          {/* Placeholder for images - you'll add real images here */}
+          {/* Event Images Gallery */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
+            {[1, 2, 3, 4].map((num) => (
               <div
                 key={num}
-                className="aspect-square bg-gradient-to-br from-yellow-100 to-orange-100 rounded-xl overflow-hidden relative shadow-lg hover:shadow-2xl transition-all duration-300"
+                className="aspect-square bg-gradient-to-br from-yellow-100 to-orange-100 rounded-xl overflow-hidden relative shadow-lg hover:shadow-2xl transition-all duration-300 group"
               >
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="text-4xl mb-2">📸</div>
-                    <p className="text-sm text-gray-600 font-medium">תמונה {num}</p>
-                  </div>
-                </div>
+                <Image
+                  src={`/images/events/event-${num}.jpg`}
+                  alt={`אירוע ${num}`}
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
             ))}
           </div>
-
-          <p className="text-center text-gray-500 mt-8 text-sm">
-            * תמונות להמחשה בלבד - תמונות אמיתיות יתווספו בקרוב
-          </p>
         </div>
       </section>
 
