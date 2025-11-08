@@ -6,19 +6,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Fetch all active categories
   const categories = await prisma.category.findMany({
-    select: { slug: true, updated_at: true },
+    select: { slug: true },
   })
 
   // Fetch all active products
   const products = await prisma.product.findMany({
     where: { is_active: true },
-    select: { slug: true, updated_at: true },
+    select: { slug: true },
   })
 
   // Fetch all active bundles
   const bundles = await prisma.bundle.findMany({
     where: { is_active: true },
-    select: { slug: true, updated_at: true },
+    select: { slug: true },
   })
 
   // Static pages
@@ -52,7 +52,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Category pages
   const categoryPages = categories.map((category) => ({
     url: `${baseUrl}/categories/${category.slug}`,
-    lastModified: category.updated_at || new Date(),
+    lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.8,
   }))
@@ -60,7 +60,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Product pages
   const productPages = products.map((product) => ({
     url: `${baseUrl}/products/${product.slug}`,
-    lastModified: product.updated_at || new Date(),
+    lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.7,
   }))
@@ -68,7 +68,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Bundle pages
   const bundlePages = bundles.map((bundle) => ({
     url: `${baseUrl}/bundles/${bundle.slug}`,
-    lastModified: bundle.updated_at || new Date(),
+    lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.8,
   }))
