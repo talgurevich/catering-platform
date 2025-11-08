@@ -33,7 +33,7 @@ export default function Hero() {
           </p>
 
           <p className="text-base md:text-lg text-gray-400 mb-10 max-w-2xl mx-auto">
-            להזמנות מראש עם משלוח עד הבית בעכו והסביבה
+            להזמנות מראש עם משלוח לאירוע
           </p>
 
           {/* Features badges */}
