@@ -6,7 +6,16 @@ import { prisma } from '@/lib/prisma'
 
 export const metadata = {
   title: 'חבילות ואירועים | BreadStation Akko',
-  description: 'חבילות קייטרינג ומגשי אירוח לכל סוגי האירועים - ימי הולדת, אירועים עסקיים, חגיגות משפחתיות ועוד',
+  description: 'חבילות קייטרינג ומגשי אירוח לכל סוגי האירועים - ימי הולדת, אירועים עסקיים, חגיגות משפחתיות ועוד. כשר למהדרין.',
+  alternates: {
+    canonical: 'https://www.breadstationakko.co.il/events',
+  },
+  openGraph: {
+    title: 'חבילות ואירועים | Bread Station Akko',
+    description: 'חבילות קייטרינג מושלמות לכל אירוע - ימי הולדת, אירועים עסקיים וחגיגות',
+    url: 'https://www.breadstationakko.co.il/events',
+    type: 'website',
+  },
 }
 
 export const dynamic = 'force-dynamic'

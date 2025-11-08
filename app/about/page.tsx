@@ -2,6 +2,21 @@ import CustomerHeader from '@/components/CustomerHeader'
 import Footer from '@/components/Footer'
 import Image from 'next/image'
 import Link from 'next/link'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'אודותינו - Bread Station Akko',
+  description: 'Bread Station Akko - סיפור המותג שלנו, הערכים שלנו והדרך שלנו. קייטרינג כשר למהדרין מעכו עם התמחות במגשי אירוח, כריכים ומאפים ביתיים.',
+  alternates: {
+    canonical: 'https://www.breadstationakko.co.il/about',
+  },
+  openGraph: {
+    title: 'אודותינו | Bread Station Akko',
+    description: 'הכירו את הסיפור שלנו - קייטרינג כשר מקצועי מעכו',
+    url: 'https://www.breadstationakko.co.il/about',
+    type: 'website',
+  },
+}
 
 export default function AboutPage() {
   return (

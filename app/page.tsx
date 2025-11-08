@@ -5,10 +5,25 @@ import Footer from '@/components/Footer'
 import AnimatedCategoryCard from '@/components/AnimatedCategoryCard'
 import Link from 'next/link'
 import Image from 'next/image'
+import type { Metadata } from 'next'
 
 // Force dynamic rendering (ISR at runtime, not build time)
 export const dynamic = 'force-dynamic'
 export const revalidate = 3600
+
+export const metadata: Metadata = {
+  title: 'דף הבית - קייטרינג מעכו',
+  description: 'Bread Station Akko - קייטרינג מקצועי מעכו. מגשי אירוח איכותיים, כריכים טריים, מאפים ביתיים ומנות לאירועים. כשר למהדרין בהשגחת הרבנות עכו. משלוחים עכו, נהרייה, קריות.',
+  alternates: {
+    canonical: 'https://www.breadstationakko.co.il',
+  },
+  openGraph: {
+    title: 'Bread Station Akko - קייטרינג מעכו | דף הבית',
+    description: 'קייטרינג מקצועי מעכו - מגשי אירוח, כריכים טריים, מאפים ביתיים. כשר למהדרין.',
+    url: 'https://www.breadstationakko.co.il',
+    type: 'website',
+  },
+}
 
 export default async function Home() {
   const categories = await prisma.category.findMany({
