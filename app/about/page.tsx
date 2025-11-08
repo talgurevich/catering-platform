@@ -117,10 +117,10 @@ export default function AboutPage() {
           <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl p-12 text-center text-white">
             <div className="text-6xl mb-6">✡️</div>
             <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">
-              כשרות למהדרין
+              כשר למהדרין
             </h2>
             <p className="text-xl text-gray-300 mb-2">
-              רבנות עכו
+              בהשגחת הרבנות עכו
             </p>
             <p className="text-gray-400 max-w-2xl mx-auto">
               כל המוצרים שלנו מיוצרים תחת השגחה קפדנית ועומדים בסטנדרטים הגבוהים ביותר של כשרות
