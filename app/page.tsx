@@ -78,7 +78,7 @@ export default async function Home() {
                 </span>
               </div>
               <h2 className="font-heading text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-                יצירות הקולינריה שלנו
+                המנות והיצירות שלנו
               </h2>
               <p className="text-xl text-gray-600 max-w-2xl mx-auto">
                 צפו בחלק מהיצירות המיוחדות שהכנו ללקוחותינו
