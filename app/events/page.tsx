@@ -351,8 +351,8 @@ export default async function EventsPage() {
           </div>
 
           {/* Event Images Gallery */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-            {[1, 2, 3, 4, 5].map((num) => (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[1, 2, 3, 4].map((num) => (
               <div
                 key={num}
                 className="aspect-square bg-gradient-to-br from-yellow-100 to-orange-100 rounded-xl overflow-hidden relative shadow-lg hover:shadow-2xl transition-all duration-300 group"
