@@ -5,6 +5,8 @@ import Footer from '@/components/Footer'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useCart } from '@/contexts/CartContext'
+import AddressAutocomplete from '@/components/AddressAutocomplete'
+import { useState } from 'react'
 
 export default function CartPage() {
   const {
@@ -19,17 +21,50 @@ export default function CartPage() {
     deliveryLocation,
     deliveryFee,
     orderNotes,
+    deliveryAddress,
+    deliveryCity,
+    deliveryStreet,
+    deliveryHouseNumber,
     setDeliveryDate,
     setDeliveryTimeSlot,
     setDeliveryLocation,
-    setOrderNotes
+    setOrderNotes,
+    setDeliveryAddress,
+    setDeliveryCity,
+    setDeliveryStreet,
+    setDeliveryHouseNumber,
   } = useCart()
+
+  const [isAddressValid, setIsAddressValid] = useState(false)
 
   // Calculate minimum date (48 hours from now)
   const getMinDate = () => {
     const date = new Date()
     date.setHours(date.getHours() + 48)
     return date.toISOString().split('T')[0]
+  }
+
+  // Handle address selection from autocomplete
+  const handleAddressSelect = (address: {
+    fullAddress: string
+    city: string
+    street: string
+    houseNumber: string
+    isValid: boolean
+    distance?: number
+  }) => {
+    setDeliveryAddress(address.fullAddress)
+    setDeliveryCity(address.city)
+    setDeliveryStreet(address.street)
+    setDeliveryHouseNumber(address.houseNumber)
+    setIsAddressValid(address.isValid)
+
+    // Auto-select delivery location based on distance
+    // If distance is available and <= 15km, consider it Akko area (free delivery)
+    // Otherwise, outside Akko (50 NIS)
+    if (address.isValid && address.distance !== undefined) {
+      setDeliveryLocation(address.distance <= 15 ? 'akko' : 'outside-akko')
+    }
   }
 
   // Time slots (2-hour blocks)
@@ -230,7 +265,9 @@ export default function CartPage() {
                             ₪
                             {(
                               (item.price +
-                                item.selectedOptions.reduce((sum, opt) => sum + opt.price_modifier, 0)) *
+                                (item.selectedOptions.length > 0
+                                  ? Math.max(...item.selectedOptions.map(opt => opt.price_modifier))
+                                  : 0)) *
                               item.quantity
                             ).toFixed(2)}
                           </p>
@@ -297,39 +334,32 @@ export default function CartPage() {
 
                   <div>
                     <label className="block text-sm font-bold text-gray-900 mb-2">
-                      מיקום אספקה <span className="text-red-500">*</span>
+                      כתובת אספקה <span className="text-red-500">*</span>
                     </label>
-                    <div className="space-y-2">
-                      <label className="flex items-center p-3 border-2 border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
-                        <input
-                          type="radio"
-                          name="deliveryLocation"
-                          value="akko"
-                          checked={deliveryLocation === 'akko'}
-                          onChange={(e) => setDeliveryLocation(e.target.value as 'akko')}
-                          className="ml-3 w-4 h-4 text-yellow-400 focus:ring-yellow-400"
-                        />
-                        <div className="flex-grow">
-                          <span className="font-semibold text-gray-900">עכו והסביבה</span>
-                          <span className="block text-sm text-green-600">משלוח חינם</span>
-                        </div>
-                      </label>
-                      <label className="flex items-center p-3 border-2 border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
-                        <input
-                          type="radio"
-                          name="deliveryLocation"
-                          value="outside-akko"
-                          checked={deliveryLocation === 'outside-akko'}
-                          onChange={(e) => setDeliveryLocation(e.target.value as 'outside-akko')}
-                          className="ml-3 w-4 h-4 text-yellow-400 focus:ring-yellow-400"
-                        />
-                        <div className="flex-grow">
-                          <span className="font-semibold text-gray-900">מחוץ לעכו</span>
-                          <span className="block text-sm text-gray-600">+₪50 דמי משלוח</span>
-                        </div>
-                      </label>
-                    </div>
+                    <AddressAutocomplete
+                      onAddressSelect={handleAddressSelect}
+                      value={deliveryAddress || ''}
+                    />
                   </div>
+
+                  {deliveryLocation && (
+                    <div className="p-4 bg-gray-50 rounded-lg border-2 border-gray-200">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <span className="font-semibold text-gray-900">
+                            {deliveryLocation === 'akko' ? 'עכו והסביבה (עד 15 ק"מ)' : 'מחוץ לעכו (15-50 ק"מ)'}
+                          </span>
+                          <span className="block text-sm mt-1">
+                            {deliveryLocation === 'akko' ? (
+                              <span className="text-green-600 font-bold">משלוח חינם</span>
+                            ) : (
+                              <span className="text-gray-600">דמי משלוח: ₪50</span>
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
 
                   <div>
                     <label className="block text-sm font-bold text-gray-900 mb-2">
@@ -375,7 +405,7 @@ export default function CartPage() {
                   </div>
                 </div>
 
-                {!deliveryDate || !deliveryTimeSlot || !deliveryLocation ? (
+                {!deliveryDate || !deliveryTimeSlot || !deliveryLocation || !isAddressValid ? (
                   <div className="mb-4">
                     <button
                       disabled
@@ -384,7 +414,9 @@ export default function CartPage() {
                       המשך לתשלום
                     </button>
                     <p className="text-sm text-red-600 text-center">
-                      יש לבחור תאריך, טווח שעות ומיקום אספקה
+                      {!isAddressValid && deliveryAddress
+                        ? 'הכתובת חייבת להיות ברדיוס 50 ק"מ מעכו'
+                        : 'יש למלא תאריך, טווח שעות וכתובת אספקה תקינה'}
                     </p>
                   </div>
                 ) : (

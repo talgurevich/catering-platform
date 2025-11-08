@@ -31,10 +31,18 @@ interface CartContextType {
   deliveryLocation: 'akko' | 'outside-akko' | null
   deliveryFee: number
   orderNotes: string
+  deliveryAddress: string | null
+  deliveryCity: string | null
+  deliveryStreet: string | null
+  deliveryHouseNumber: string | null
   setDeliveryDate: (date: string | null) => void
   setDeliveryTimeSlot: (slot: string | null) => void
   setDeliveryLocation: (location: 'akko' | 'outside-akko' | null) => void
   setOrderNotes: (notes: string) => void
+  setDeliveryAddress: (address: string | null) => void
+  setDeliveryCity: (city: string | null) => void
+  setDeliveryStreet: (street: string | null) => void
+  setDeliveryHouseNumber: (houseNumber: string | null) => void
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined)
@@ -46,6 +54,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [deliveryTimeSlot, setDeliveryTimeSlot] = useState<string | null>(null)
   const [deliveryLocation, setDeliveryLocation] = useState<'akko' | 'outside-akko' | null>(null)
   const [orderNotes, setOrderNotes] = useState<string>('')
+  const [deliveryAddress, setDeliveryAddress] = useState<string | null>(null)
+  const [deliveryCity, setDeliveryCity] = useState<string | null>(null)
+  const [deliveryStreet, setDeliveryStreet] = useState<string | null>(null)
+  const [deliveryHouseNumber, setDeliveryHouseNumber] = useState<string | null>(null)
 
   // Load cart from localStorage on mount
   useEffect(() => {
@@ -54,6 +66,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
     const savedDeliveryTimeSlot = localStorage.getItem('deliveryTimeSlot')
     const savedDeliveryLocation = localStorage.getItem('deliveryLocation')
     const savedOrderNotes = localStorage.getItem('orderNotes')
+    const savedDeliveryAddress = localStorage.getItem('deliveryAddress')
+    const savedDeliveryCity = localStorage.getItem('deliveryCity')
+    const savedDeliveryStreet = localStorage.getItem('deliveryStreet')
+    const savedDeliveryHouseNumber = localStorage.getItem('deliveryHouseNumber')
 
     if (savedCart) {
       try {
@@ -66,6 +82,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
     if (savedDeliveryTimeSlot) setDeliveryTimeSlot(savedDeliveryTimeSlot)
     if (savedDeliveryLocation) setDeliveryLocation(savedDeliveryLocation as 'akko' | 'outside-akko')
     if (savedOrderNotes) setOrderNotes(savedOrderNotes)
+    if (savedDeliveryAddress) setDeliveryAddress(savedDeliveryAddress)
+    if (savedDeliveryCity) setDeliveryCity(savedDeliveryCity)
+    if (savedDeliveryStreet) setDeliveryStreet(savedDeliveryStreet)
+    if (savedDeliveryHouseNumber) setDeliveryHouseNumber(savedDeliveryHouseNumber)
 
     setIsLoaded(true)
   }, [])
@@ -118,6 +138,46 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
   }, [orderNotes, isLoaded])
 
+  useEffect(() => {
+    if (isLoaded) {
+      if (deliveryAddress) {
+        localStorage.setItem('deliveryAddress', deliveryAddress)
+      } else {
+        localStorage.removeItem('deliveryAddress')
+      }
+    }
+  }, [deliveryAddress, isLoaded])
+
+  useEffect(() => {
+    if (isLoaded) {
+      if (deliveryCity) {
+        localStorage.setItem('deliveryCity', deliveryCity)
+      } else {
+        localStorage.removeItem('deliveryCity')
+      }
+    }
+  }, [deliveryCity, isLoaded])
+
+  useEffect(() => {
+    if (isLoaded) {
+      if (deliveryStreet) {
+        localStorage.setItem('deliveryStreet', deliveryStreet)
+      } else {
+        localStorage.removeItem('deliveryStreet')
+      }
+    }
+  }, [deliveryStreet, isLoaded])
+
+  useEffect(() => {
+    if (isLoaded) {
+      if (deliveryHouseNumber) {
+        localStorage.setItem('deliveryHouseNumber', deliveryHouseNumber)
+      } else {
+        localStorage.removeItem('deliveryHouseNumber')
+      }
+    }
+  }, [deliveryHouseNumber, isLoaded])
+
   const addItem = (newItem: Omit<CartItem, 'id'>) => {
     setItems((currentItems) => {
       // Check if item with same product and options already exists
@@ -168,6 +228,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setDeliveryTimeSlot(null)
     setDeliveryLocation(null)
     setOrderNotes('')
+    setDeliveryAddress(null)
+    setDeliveryCity(null)
+    setDeliveryStreet(null)
+    setDeliveryHouseNumber(null)
   }
 
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0)
@@ -198,10 +262,18 @@ export function CartProvider({ children }: { children: ReactNode }) {
         deliveryLocation,
         deliveryFee,
         orderNotes,
+        deliveryAddress,
+        deliveryCity,
+        deliveryStreet,
+        deliveryHouseNumber,
         setDeliveryDate,
         setDeliveryTimeSlot,
         setDeliveryLocation,
         setOrderNotes,
+        setDeliveryAddress,
+        setDeliveryCity,
+        setDeliveryStreet,
+        setDeliveryHouseNumber,
       }}
     >
       {children}
