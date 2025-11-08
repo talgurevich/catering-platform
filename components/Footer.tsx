@@ -96,7 +96,7 @@ export default function Footer() {
             <h3 className="font-heading text-xl font-bold mb-4">כשרות</h3>
             <div className="inline-block bg-white text-gray-900 px-6 py-3 rounded-lg font-bold text-center mb-4">
               <div className="text-lg">כשר למהדרין</div>
-              <div className="text-sm text-gray-600 mt-1">בד״ץ העדה החרדית</div>
+              <div className="text-sm text-gray-600 mt-1">רבנות עכו</div>
             </div>
           </div>
         </div>
