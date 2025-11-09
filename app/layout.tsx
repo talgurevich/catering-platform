@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Epilogue, Nunito } from 'next/font/google'
+import Script from 'next/script'
 import "./globals.css";
 import { CartProvider } from '@/contexts/CartContext'
 import QueryProvider from '@/components/QueryProvider'
@@ -98,6 +99,20 @@ export default function RootLayout({
         <StructuredData />
       </head>
       <body className={nunito.className}>
+        {/* Google Analytics */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-70386ER8ZK"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-70386ER8ZK');
+          `}
+        </Script>
+
         <QueryProvider>
           <CartProvider>
             {children}
