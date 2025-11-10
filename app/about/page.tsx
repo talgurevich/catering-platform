@@ -69,9 +69,12 @@ export default function AboutPage() {
             </div>
             <div className="relative">
               <div className="aspect-square bg-gradient-to-br from-yellow-100 to-orange-100 rounded-3xl overflow-hidden shadow-2xl">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-9xl">🏪</span>
-                </div>
+                <Image
+                  src="/images/about-store.jpg"
+                  alt="תחנת הלחם עכו"
+                  fill
+                  className="object-cover"
+                />
               </div>
             </div>
           </div>
