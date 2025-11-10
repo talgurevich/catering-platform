@@ -15,20 +15,22 @@ export default function CustomerHeader() {
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center relative">
-            <Image
-              src="/images/breadstation-official-logo.png"
-              alt="BreadStation Akko"
-              width={270}
-              height={41}
-              className="h-11 w-auto object-contain"
-              priority
-            />
+          <div className="relative">
+            <Link href="/" className="flex items-center">
+              <Image
+                src="/images/breadstation-official-logo.png"
+                alt="BreadStation Akko"
+                width={270}
+                height={41}
+                className="h-11 w-auto object-contain"
+                priority
+              />
+            </Link>
             {/* Akko Badge */}
-            <div className="absolute -top-1 left-0 bg-yellow-400 text-gray-900 px-2 py-0.5 rounded-br-lg rounded-tl-lg text-xs font-bold shadow-md">
+            <div className="absolute top-0 right-0 bg-yellow-400 text-gray-900 px-2 py-1 rounded-bl-lg rounded-tr-lg text-xs font-bold shadow-lg z-10">
               עכו
             </div>
-          </Link>
+          </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">

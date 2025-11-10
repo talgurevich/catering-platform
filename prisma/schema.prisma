@@ -58,34 +58,40 @@ model DiscountCode {
 }
 
 model Order {
-  id                     String        @id
-  order_number           String        @unique
-  customer_name          String
-  customer_phone         String
-  customer_email         String
-  delivery_address       Json
-  delivery_date          DateTime
-  delivery_time_slot     String
-  special_instructions   String?
-  subtotal               Decimal       @db.Decimal(10, 2)
-  discount_code_id       String?
-  discount_amount        Decimal       @default(0) @db.Decimal(10, 2)
-  delivery_fee           Decimal       @default(0) @db.Decimal(10, 2)
-  total                  Decimal       @db.Decimal(10, 2)
-  payment_status         String        @default("pending")
-  payment_transaction_id String?
-  payplus_invoice_number String?
-  order_status           String        @default("pending")
-  notes                  String?
-  created_at             DateTime      @default(now())
-  updated_at             DateTime
-  DiscountCode           DiscountCode? @relation(fields: [discount_code_id], references: [id])
-  OrderItem              OrderItem[]
+  id                       String        @id
+  order_number             String        @unique
+  customer_name            String
+  customer_phone           String
+  customer_email           String
+  delivery_address         Json
+  delivery_date            DateTime
+  delivery_time_slot       String
+  special_instructions     String?
+  subtotal                 Decimal       @db.Decimal(10, 2)
+  discount_code_id         String?
+  discount_amount          Decimal       @default(0) @db.Decimal(10, 2)
+  delivery_fee             Decimal       @default(0) @db.Decimal(10, 2)
+  total                    Decimal       @db.Decimal(10, 2)
+  payment_status           String        @default("pending")
+  payment_transaction_id   String?
+  payplus_invoice_number   String?
+  payplus_page_request_uid String?       @unique
+  payplus_transaction_uid  String?
+  payplus_approval_number  String?
+  payplus_voucher_number   String?
+  payplus_response         Json?
+  order_status             String        @default("pending")
+  notes                    String?
+  created_at               DateTime      @default(now())
+  updated_at               DateTime
+  DiscountCode             DiscountCode? @relation(fields: [discount_code_id], references: [id])
+  OrderItem                OrderItem[]
 
   @@index([customer_phone])
   @@index([delivery_date])
   @@index([order_number])
   @@index([order_status])
+  @@index([payplus_page_request_uid])
 }
 
 model OrderItem {
