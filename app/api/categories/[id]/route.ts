@@ -18,10 +18,7 @@ export async function PUT(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
     }
 
-    const categoryId = parseInt(params.id)
-    if (isNaN(categoryId)) {
-      return NextResponse.json({ error: 'Invalid category ID' }, { status: 400 })
-    }
+    const categoryId = params.id
 
     const body = await request.json()
     const { name_he, slug, display_order } = body
@@ -75,10 +72,7 @@ export async function DELETE(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
     }
 
-    const categoryId = parseInt(params.id)
-    if (isNaN(categoryId)) {
-      return NextResponse.json({ error: 'Invalid category ID' }, { status: 400 })
-    }
+    const categoryId = params.id
 
     // Check if category exists
     const category = await prisma.category.findUnique({

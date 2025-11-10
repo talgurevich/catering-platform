@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 interface Category {
-  id: number
+  id: string
   name_he: string
   slug: string
   display_order: number
@@ -20,7 +20,7 @@ interface CategoryManagementProps {
 export default function CategoryManagement({ initialCategories }: CategoryManagementProps) {
   const router = useRouter()
   const [categories, setCategories] = useState(initialCategories)
-  const [editingId, setEditingId] = useState<number | null>(null)
+  const [editingId, setEditingId] = useState<string | null>(null)
   const [editForm, setEditForm] = useState({ name_he: '', slug: '', display_order: 0 })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -41,7 +41,7 @@ export default function CategoryManagement({ initialCategories }: CategoryManage
     setError('')
   }
 
-  const handleSaveEdit = async (id: number) => {
+  const handleSaveEdit = async (id: string) => {
     setLoading(true)
     setError('')
 
@@ -71,7 +71,7 @@ export default function CategoryManagement({ initialCategories }: CategoryManage
     }
   }
 
-  const handleDelete = async (id: number, productCount: number) => {
+  const handleDelete = async (id: string, productCount: number) => {
     if (productCount > 0) {
       setError('לא ניתן למחוק קטגוריה עם מוצרים. אנא הסר את כל המוצרים תחילה.')
       return
