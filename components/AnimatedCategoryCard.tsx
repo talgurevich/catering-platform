@@ -54,14 +54,14 @@ export default function AnimatedCategoryCard({ category, index }: AnimatedCatego
     <Link
       ref={cardRef}
       href={`/categories/${category.slug}`}
-      className={`group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden transform hover:-translate-y-2 ${
+      className={`group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
       }`}
       style={{
         transitionDelay: `${index * 100}ms`,
       }}
     >
-      <div className="aspect-video bg-gradient-to-br from-yellow-100 to-orange-100 relative overflow-hidden">
+      <div className="aspect-video bg-gradient-to-br from-yellow-100 to-orange-100 relative overflow-hidden rounded-t-2xl">
         {category.Product[0]?.image_url ? (
           <Image
             src={category.Product[0].image_url}
@@ -76,11 +76,11 @@ export default function AnimatedCategoryCard({ category, index }: AnimatedCatego
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
       </div>
-      <div className="p-6 pb-7">
+      <div className="p-6 pb-8">
         <h3 className="font-heading text-2xl font-bold text-gray-900 mb-3 group-hover:text-yellow-600 transition-colors">
           {category.name_he}
         </h3>
-        <p className="text-gray-600 text-sm leading-relaxed mb-1">
+        <p className="text-gray-600 text-sm leading-relaxed">
           {category._count.Product} מוצרים זמינים • בחרו את המועדפים עליכם
         </p>
       </div>
