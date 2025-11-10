@@ -126,24 +126,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Kosher Certification */}
-      <section className="py-20 bg-white" dir="rtl">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl p-12 text-center text-white">
-            <div className="text-6xl mb-6">✡️</div>
-            <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">
-              כשר למהדרין
-            </h2>
-            <p className="text-xl text-gray-300 mb-2">
-              בהשגחת הרבנות עכו
-            </p>
-            <p className="text-gray-400 max-w-2xl mx-auto">
-              כל המוצרים שלנו מיוצרים תחת השגחה קפדנית ועומדים בסטנדרטים הגבוהים ביותר של כשרות
-            </p>
-          </div>
-        </div>
-      </section>
-
       {/* Contact CTA */}
       <section className="py-20 bg-gradient-to-br from-yellow-400 via-yellow-300 to-orange-400" dir="rtl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -151,7 +133,7 @@ export default function AboutPage() {
             בואו נכיר!
           </h2>
           <p className="text-xl text-gray-800 mb-8 max-w-2xl mx-auto">
-            נשמח לראות אתכם בחנות שלנו בברכה צפירה 1 בעכו, או לשוחח איתכם על ההזמנה הבאה שלכם
+            נשמח לראות אתכם בחנות שלנו בברכה צפירה 3 בעכו, או לשוחח איתכם על ההזמנה הבאה שלכם
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
