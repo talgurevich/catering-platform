@@ -18,7 +18,8 @@ export const metadata = {
   },
 }
 
-export const dynamic = 'force-dynamic'
+// Use ISR with revalidation every 5 minutes
+export const revalidate = 300
 
 export default async function EventsPage() {
   // Fetch active bundles

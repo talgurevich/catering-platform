@@ -7,9 +7,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import type { Metadata } from 'next'
 
-// Force dynamic rendering (ISR at runtime, not build time)
-export const dynamic = 'force-dynamic'
-export const revalidate = 3600
+// Use ISR with revalidation every 5 minutes
+export const revalidate = 300
 
 export const metadata: Metadata = {
   title: 'דף הבית - קייטרינג מעכו',
