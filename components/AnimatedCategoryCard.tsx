@@ -12,6 +12,9 @@ interface AnimatedCategoryCardProps {
     Product: Array<{
       image_url?: string | null
     }>
+    _count: {
+      Product: number
+    }
   }
   index: number
 }
@@ -74,15 +77,12 @@ export default function AnimatedCategoryCard({ category, index }: AnimatedCatego
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
       </div>
       <div className="p-6">
-        <h3 className="font-heading text-2xl font-bold text-gray-900 mb-2 group-hover:text-yellow-600 transition-colors">
+        <h3 className="font-heading text-2xl font-bold text-gray-900 mb-3 group-hover:text-yellow-600 transition-colors">
           {category.name_he}
         </h3>
-        <div className="flex items-center text-gray-600 text-sm">
-          <span>לחצו לצפייה במוצרים</span>
-          <svg className="w-4 h-4 mr-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-        </div>
+        <p className="text-gray-600 text-sm leading-relaxed">
+          {category._count.Product} מוצרים זמינים • בחרו את המועדפים עליכם
+        </p>
       </div>
     </Link>
   )

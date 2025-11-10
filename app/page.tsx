@@ -39,6 +39,13 @@ export default async function Home() {
           image_url: true,
         },
       },
+      _count: {
+        select: {
+          Product: {
+            where: { is_active: true }
+          }
+        }
+      }
     },
   })
 
