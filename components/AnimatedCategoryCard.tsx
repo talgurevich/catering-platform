@@ -76,11 +76,11 @@ export default function AnimatedCategoryCard({ category, index }: AnimatedCatego
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
       </div>
-      <div className="p-6 pb-8">
-        <h3 className="font-heading text-2xl font-bold text-gray-900 mb-3 group-hover:text-yellow-600 transition-colors">
+      <div className="p-6 pb-10">
+        <h3 className="font-heading text-2xl font-bold text-gray-900 mb-3 group-hover:text-yellow-600 transition-colors leading-tight">
           {category.name_he}
         </h3>
-        <p className="text-gray-600 text-sm leading-relaxed">
+        <p className="text-gray-600 text-sm leading-relaxed mb-2">
           {category._count.Product} מוצרים זמינים • בחרו את המועדפים עליכם
         </p>
       </div>
