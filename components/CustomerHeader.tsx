@@ -15,7 +15,7 @@ export default function CustomerHeader() {
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center">
+          <Link href="/" className="flex items-center relative">
             <Image
               src="/images/breadstation-official-logo.png"
               alt="BreadStation Akko"
@@ -24,6 +24,10 @@ export default function CustomerHeader() {
               className="h-11 w-auto object-contain"
               priority
             />
+            {/* Akko Badge */}
+            <div className="absolute -top-1 left-0 bg-yellow-400 text-gray-900 px-2 py-0.5 rounded-br-lg rounded-tl-lg text-xs font-bold shadow-md">
+              עכו
+            </div>
           </Link>
 
           {/* Desktop Navigation */}
