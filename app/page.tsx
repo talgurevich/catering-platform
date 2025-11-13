@@ -3,6 +3,7 @@ import CustomerHeader from '@/components/CustomerHeader'
 import Hero from '@/components/Hero'
 import Footer from '@/components/Footer'
 import AnimatedCategoryCard from '@/components/AnimatedCategoryCard'
+import ProductFAQ from '@/components/ProductFAQ'
 import Link from 'next/link'
 import Image from 'next/image'
 import type { Metadata } from 'next'
@@ -189,6 +190,13 @@ export default async function Home() {
                 </span>
               </a>
             </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="relative bg-white py-20 overflow-hidden z-10">
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <ProductFAQ />
           </div>
         </section>
       </main>
