@@ -24,6 +24,8 @@ export default function CategoryManagement({ initialCategories }: CategoryManage
   const [editForm, setEditForm] = useState({ name_he: '', slug: '', display_order: 0 })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [showAddForm, setShowAddForm] = useState(false)
+  const [addForm, setAddForm] = useState({ name_he: '', slug: '', display_order: 0 })
 
   const handleEdit = (category: Category) => {
     setEditingId(category.id)
@@ -105,6 +107,46 @@ export default function CategoryManagement({ initialCategories }: CategoryManage
     }
   }
 
+  const handleAdd = async () => {
+    if (!addForm.name_he || !addForm.slug) {
+      setError('שם וסלאג הם שדות חובה')
+      return
+    }
+
+    setLoading(true)
+    setError('')
+
+    try {
+      const response = await fetch('/api/categories', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(addForm)
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to create category')
+      }
+
+      // Add to local state
+      setCategories([...categories, data.category])
+      setAddForm({ name_he: '', slug: '', display_order: 0 })
+      setShowAddForm(false)
+      router.refresh()
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to create category')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleCancelAdd = () => {
+    setAddForm({ name_he: '', slug: '', display_order: 0 })
+    setShowAddForm(false)
+    setError('')
+  }
+
   return (
     <div>
       {error && (
@@ -112,6 +154,78 @@ export default function CategoryManagement({ initialCategories }: CategoryManage
           {error}
         </div>
       )}
+
+      {/* Add Category Button */}
+      <div className="mb-6">
+        {!showAddForm ? (
+          <button
+            onClick={() => setShowAddForm(true)}
+            className="px-6 py-3 bg-green-600 text-white rounded-lg font-bold hover:bg-green-700 transition-colors"
+          >
+            + הוסף קטגוריה חדשה
+          </button>
+        ) : (
+          <div className="bg-green-50 border-2 border-green-200 rounded-lg p-6">
+            <h3 className="text-lg font-bold text-gray-900 mb-4">קטגוריה חדשה</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  שם הקטגוריה <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  value={addForm.name_he}
+                  onChange={(e) => setAddForm({ ...addForm, name_he: e.target.value })}
+                  placeholder="לדוגמה: כריכים"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                  disabled={loading}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Slug (באנגלית) <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  value={addForm.slug}
+                  onChange={(e) => setAddForm({ ...addForm, slug: e.target.value })}
+                  placeholder="sandwiches"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                  disabled={loading}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  סדר תצוגה
+                </label>
+                <input
+                  type="number"
+                  value={addForm.display_order}
+                  onChange={(e) => setAddForm({ ...addForm, display_order: parseInt(e.target.value) || 0 })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                  disabled={loading}
+                />
+              </div>
+            </div>
+            <div className="flex gap-3">
+              <button
+                onClick={handleAdd}
+                disabled={loading}
+                className="px-6 py-2 bg-green-600 text-white rounded-lg font-bold hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {loading ? 'שומר...' : 'שמור קטגוריה'}
+              </button>
+              <button
+                onClick={handleCancelAdd}
+                disabled={loading}
+                className="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg font-bold hover:bg-gray-300 transition-colors disabled:opacity-50"
+              >
+                ביטול
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
 
       <div className="bg-white rounded-lg shadow overflow-hidden">
         <table className="min-w-full divide-y divide-gray-200">
