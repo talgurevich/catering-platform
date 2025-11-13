@@ -6,7 +6,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useCart } from '@/contexts/CartContext'
 import AddressAutocomplete from '@/components/AddressAutocomplete'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function CartPage() {
   const {
@@ -36,12 +36,39 @@ export default function CartPage() {
   } = useCart()
 
   const [isAddressValid, setIsAddressValid] = useState(false)
+  const [fulfillmentMethod, setFulfillmentMethod] = useState<'delivery' | 'pickup'>('delivery')
+
+  // Sync fulfillment method with delivery location
+  useEffect(() => {
+    if (deliveryLocation === 'pickup') {
+      setFulfillmentMethod('pickup')
+    } else if (deliveryLocation === 'akko' || deliveryLocation === 'outside-akko') {
+      setFulfillmentMethod('delivery')
+    }
+  }, [deliveryLocation])
 
   // Calculate minimum date (48 hours from now)
   const getMinDate = () => {
     const date = new Date()
     date.setHours(date.getHours() + 48)
     return date.toISOString().split('T')[0]
+  }
+
+  // Handle fulfillment method change
+  const handleFulfillmentMethodChange = (method: 'delivery' | 'pickup') => {
+    setFulfillmentMethod(method)
+    if (method === 'pickup') {
+      setDeliveryLocation('pickup')
+      // Clear address fields when switching to pickup
+      setDeliveryAddress(null)
+      setDeliveryCity(null)
+      setDeliveryStreet(null)
+      setDeliveryHouseNumber(null)
+      setIsAddressValid(false)
+    } else {
+      // Reset to null when switching to delivery, user will need to enter address
+      setDeliveryLocation(null)
+    }
   }
 
   // Handle address selection from autocomplete
@@ -332,26 +359,78 @@ export default function CartPage() {
                     </select>
                   </div>
 
+                  {/* Fulfillment Method Selection */}
                   <div>
-                    <label className="block text-sm font-bold text-gray-900 mb-2">
-                      כתובת אספקה <span className="text-red-500">*</span>
+                    <label className="block text-sm font-bold text-gray-900 mb-3">
+                      אופן קבלת ההזמנה <span className="text-red-500">*</span>
                     </label>
-                    <AddressAutocomplete
-                      onAddressSelect={handleAddressSelect}
-                      value={deliveryAddress || ''}
-                    />
+                    <div className="space-y-3">
+                      <label className={`flex items-center p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                        fulfillmentMethod === 'delivery'
+                          ? 'border-yellow-400 bg-yellow-50'
+                          : 'border-gray-300 hover:border-yellow-400'
+                      }`}>
+                        <input
+                          type="radio"
+                          name="fulfillmentMethod"
+                          value="delivery"
+                          checked={fulfillmentMethod === 'delivery'}
+                          onChange={() => handleFulfillmentMethodChange('delivery')}
+                          className="ml-3 w-5 h-5 text-yellow-400 focus:ring-yellow-400"
+                        />
+                        <div className="flex-grow">
+                          <div className="font-bold text-gray-900">משלוח לכתובת</div>
+                          <div className="text-sm text-gray-600">משלוח חינם עד 15 ק"מ, ₪50 עד 50 ק"מ</div>
+                        </div>
+                      </label>
+                      <label className={`flex items-center p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                        fulfillmentMethod === 'pickup'
+                          ? 'border-yellow-400 bg-yellow-50'
+                          : 'border-gray-300 hover:border-yellow-400'
+                      }`}>
+                        <input
+                          type="radio"
+                          name="fulfillmentMethod"
+                          value="pickup"
+                          checked={fulfillmentMethod === 'pickup'}
+                          onChange={() => handleFulfillmentMethodChange('pickup')}
+                          className="ml-3 w-5 h-5 text-yellow-400 focus:ring-yellow-400"
+                        />
+                        <div className="flex-grow">
+                          <div className="font-bold text-gray-900">איסוף עצמי</div>
+                          <div className="text-sm text-gray-600">איסוף מהחנות בברכה צפירה 3, עכו - חינם</div>
+                        </div>
+                      </label>
+                    </div>
                   </div>
+
+                  {/* Address - Only show for delivery */}
+                  {fulfillmentMethod === 'delivery' && (
+                    <div>
+                      <label className="block text-sm font-bold text-gray-900 mb-2">
+                        כתובת אספקה <span className="text-red-500">*</span>
+                      </label>
+                      <AddressAutocomplete
+                        onAddressSelect={handleAddressSelect}
+                        value={deliveryAddress || ''}
+                      />
+                    </div>
+                  )}
 
                   {deliveryLocation && (
                     <div className="p-4 bg-gray-50 rounded-lg border-2 border-gray-200">
                       <div className="flex items-center justify-between">
                         <div>
                           <span className="font-semibold text-gray-900">
-                            {deliveryLocation === 'akko' ? 'עכו והסביבה (עד 15 ק"מ)' : 'מחוץ לעכו (15-50 ק"מ)'}
+                            {deliveryLocation === 'pickup'
+                              ? 'איסוף עצמי מהחנות'
+                              : deliveryLocation === 'akko'
+                              ? 'עכו והסביבה (עד 15 ק"מ)'
+                              : 'מחוץ לעכו (15-50 ק"מ)'}
                           </span>
                           <span className="block text-sm mt-1">
-                            {deliveryLocation === 'akko' ? (
-                              <span className="text-green-600 font-bold">משלוח חינם</span>
+                            {deliveryLocation === 'pickup' || deliveryLocation === 'akko' ? (
+                              <span className="text-green-600 font-bold">חינם</span>
                             ) : (
                               <span className="text-gray-600">דמי משלוח: ₪50</span>
                             )}
@@ -396,7 +475,13 @@ export default function CartPage() {
                   <div className="flex items-center justify-between text-gray-600">
                     <span>דמי משלוח:</span>
                     <span className="font-bold">
-                      {deliveryFee === 0 ? 'כלול במחיר' : `כלול במחיר`}
+                      {deliveryLocation === 'pickup' ? (
+                        <span className="text-green-600">איסוף עצמי - חינם</span>
+                      ) : deliveryFee === 0 ? (
+                        <span className="text-green-600">משלוח חינם</span>
+                      ) : (
+                        `כלול במחיר`
+                      )}
                     </span>
                   </div>
 
@@ -412,7 +497,7 @@ export default function CartPage() {
                   </div>
                 </div>
 
-                {!deliveryDate || !deliveryTimeSlot || !deliveryLocation || !isAddressValid ? (
+                {!deliveryDate || !deliveryTimeSlot || !deliveryLocation || (deliveryLocation !== 'pickup' && !isAddressValid) ? (
                   <div className="mb-4">
                     <button
                       disabled
@@ -421,8 +506,10 @@ export default function CartPage() {
                       המשך לתשלום
                     </button>
                     <p className="text-sm text-red-600 text-center">
-                      {!isAddressValid && deliveryAddress
+                      {!isAddressValid && deliveryAddress && deliveryLocation !== 'pickup'
                         ? 'הכתובת חייבת להיות ברדיוס 50 ק"מ מעכו'
+                        : deliveryLocation === 'pickup'
+                        ? 'יש למלא תאריך וטווח שעות'
                         : 'יש למלא תאריך, טווח שעות וכתובת אספקה תקינה'}
                     </p>
                   </div>

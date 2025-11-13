@@ -28,7 +28,7 @@ interface CartContextType {
   totalPrice: number
   deliveryDate: string | null
   deliveryTimeSlot: string | null
-  deliveryLocation: 'akko' | 'outside-akko' | null
+  deliveryLocation: 'akko' | 'outside-akko' | 'pickup' | null
   deliveryFee: number
   orderNotes: string
   deliveryAddress: string | null
@@ -37,7 +37,7 @@ interface CartContextType {
   deliveryHouseNumber: string | null
   setDeliveryDate: (date: string | null) => void
   setDeliveryTimeSlot: (slot: string | null) => void
-  setDeliveryLocation: (location: 'akko' | 'outside-akko' | null) => void
+  setDeliveryLocation: (location: 'akko' | 'outside-akko' | 'pickup' | null) => void
   setOrderNotes: (notes: string) => void
   setDeliveryAddress: (address: string | null) => void
   setDeliveryCity: (city: string | null) => void
@@ -52,7 +52,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [isLoaded, setIsLoaded] = useState(false)
   const [deliveryDate, setDeliveryDate] = useState<string | null>(null)
   const [deliveryTimeSlot, setDeliveryTimeSlot] = useState<string | null>(null)
-  const [deliveryLocation, setDeliveryLocation] = useState<'akko' | 'outside-akko' | null>(null)
+  const [deliveryLocation, setDeliveryLocation] = useState<'akko' | 'outside-akko' | 'pickup' | null>(null)
   const [orderNotes, setOrderNotes] = useState<string>('')
   const [deliveryAddress, setDeliveryAddress] = useState<string | null>(null)
   const [deliveryCity, setDeliveryCity] = useState<string | null>(null)
@@ -73,14 +73,20 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
     if (savedCart) {
       try {
-        setItems(JSON.parse(savedCart))
+        const parsedCart = JSON.parse(savedCart) as CartItem[]
+        // Ensure all items have selectedOptions array (for backward compatibility)
+        const migratedCart = parsedCart.map(item => ({
+          ...item,
+          selectedOptions: item.selectedOptions || []
+        }))
+        setItems(migratedCart)
       } catch (error) {
         console.error('Failed to load cart from localStorage:', error)
       }
     }
     if (savedDeliveryDate) setDeliveryDate(savedDeliveryDate)
     if (savedDeliveryTimeSlot) setDeliveryTimeSlot(savedDeliveryTimeSlot)
-    if (savedDeliveryLocation) setDeliveryLocation(savedDeliveryLocation as 'akko' | 'outside-akko')
+    if (savedDeliveryLocation) setDeliveryLocation(savedDeliveryLocation as 'akko' | 'outside-akko' | 'pickup')
     if (savedOrderNotes) setOrderNotes(savedOrderNotes)
     if (savedDeliveryAddress) setDeliveryAddress(savedDeliveryAddress)
     if (savedDeliveryCity) setDeliveryCity(savedDeliveryCity)
@@ -238,13 +244,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const totalPrice = items.reduce((sum, item) => {
     // Use the maximum price modifier, not the sum of all modifiers
-    const maxPriceModifier = item.selectedOptions.length > 0
+    const maxPriceModifier = item.selectedOptions?.length > 0
       ? Math.max(...item.selectedOptions.map(opt => opt.price_modifier))
       : 0
     return sum + (item.price + maxPriceModifier) * item.quantity
   }, 0)
 
-  // Calculate delivery fee: 50 NIS for outside Akko, free for Akko
+  // Calculate delivery fee: 50 NIS for outside Akko, free for Akko and pickup
   const deliveryFee = deliveryLocation === 'outside-akko' ? 50 : 0
 
   return (

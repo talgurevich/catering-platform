@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import AddToCartButton from '@/components/AddToCartButton'
+import ProductFAQ from '@/components/ProductFAQ'
 
 interface ProductPageProps {
   params: {
@@ -233,6 +234,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* FAQ Section */}
+          <div className="mt-16">
+            <ProductFAQ />
           </div>
         </div>
       </main>

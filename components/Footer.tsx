@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { FaInstagram, FaFacebookF, FaWhatsapp } from 'react-icons/fa'
 import { HiLocationMarker } from 'react-icons/hi'
+import { SiVisa, SiMastercard, SiAmericanexpress, SiApplepay, SiGooglepay } from 'react-icons/si'
 
 export default function Footer() {
   return (
@@ -118,19 +119,33 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; {new Date().getFullYear()} תחנת הלחם עכו. כל הזכויות שמורות.</p>
-          <p className="mt-2 text-sm">
-            אתר זה נבנה על ידי{' '}
-            <a
-              href="https://www.errn.io"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-yellow-400 hover:text-yellow-300 transition-colors underline"
-            >
-              errn.io
-            </a>
-          </p>
+        <div className="border-t border-gray-800 mt-8 pt-8">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            {/* Payment Methods - Left side */}
+            <div className="flex items-center gap-4 order-2 md:order-1">
+              <SiVisa className="text-4xl text-gray-400 hover:text-white transition-colors" />
+              <SiMastercard className="text-4xl text-gray-400 hover:text-white transition-colors" />
+              <SiAmericanexpress className="text-4xl text-gray-400 hover:text-white transition-colors" />
+              <SiApplepay className="text-4xl text-gray-400 hover:text-white transition-colors" />
+              <SiGooglepay className="text-4xl text-gray-400 hover:text-white transition-colors" />
+            </div>
+
+            {/* Copyright - Right side */}
+            <div className="text-center text-gray-400 order-1 md:order-2">
+              <p>&copy; {new Date().getFullYear()} תחנת הלחם עכו. כל הזכויות שמורות.</p>
+              <p className="mt-2 text-sm">
+                אתר זה נבנה על ידי{' '}
+                <a
+                  href="https://www.errn.io"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-yellow-400 hover:text-yellow-300 transition-colors underline"
+                >
+                  errn.io
+                </a>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
