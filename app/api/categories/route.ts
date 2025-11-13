@@ -55,6 +55,7 @@ export async function POST(request: Request) {
     // Create category
     const newCategory = await prisma.category.create({
       data: {
+        id: crypto.randomUUID(),
         name_he,
         slug,
         display_order: display_order !== undefined ? parseInt(display_order) : 0,
