@@ -139,12 +139,20 @@ export default function AboutPage() {
             נשמח לראות אתכם בחנות שלנו בברכה צפירה 3 בעכו, או לשוחח איתכם על ההזמנה הבאה שלכם
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/contact"
+            <a
+              href="https://wa.me/972502670040"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-10 py-5 bg-green-500 text-white rounded-xl font-bold text-xl hover:bg-green-600 transition-all duration-300 shadow-xl hover:scale-105"
+            >
+              שלחו הודעת וואטסאפ
+            </a>
+            <a
+              href="tel:+972502670040"
               className="px-10 py-5 bg-gray-900 text-white rounded-xl font-bold text-xl hover:bg-gray-800 transition-all duration-300 shadow-xl hover:scale-105"
             >
-              צרו קשר
-            </Link>
+              התקשרו אלינו
+            </a>
             <Link
               href="/"
               className="px-10 py-5 bg-white text-gray-900 rounded-xl font-bold text-xl hover:bg-gray-100 transition-all duration-300 shadow-xl hover:scale-105"
