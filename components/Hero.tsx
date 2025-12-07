@@ -4,14 +4,26 @@ import Image from 'next/image'
 export default function Hero() {
   return (
     <section
-      className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white overflow-visible pb-20"
+      className="relative text-white overflow-visible pb-20"
       dir="rtl"
       style={{
         clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 60px), 90% calc(100% - 50px), 80% calc(100% - 42px), 70% calc(100% - 36px), 60% calc(100% - 32px), 50% calc(100% - 30px), 40% calc(100% - 32px), 30% calc(100% - 36px), 20% calc(100% - 42px), 10% calc(100% - 50px), 0 calc(100% - 60px))',
       }}
     >
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/images/hero-bg.jpg"
+          alt="Bread Station bakery background"
+          fill
+          className="object-cover"
+          priority
+        />
+        {/* Dark overlay for text readability */}
+        <div className="absolute inset-0 bg-black/60" />
+      </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
         <div className="text-center">
           {/* Large hero logo */}
           <div className="mb-8 flex justify-center">
