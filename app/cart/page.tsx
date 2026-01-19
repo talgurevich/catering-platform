@@ -135,7 +135,7 @@ export default function CartPage() {
 
   // Generate WhatsApp message with cart details
   const generateWhatsAppMessage = () => {
-    let message = `🛒 *הזמנה חדשה מהאתר*\n\n`
+    let message = `שלום, אשמח לבצע הזמנה מהאתר 🙏\n\n`
 
     // Items
     message += `*פריטים:*\n`
