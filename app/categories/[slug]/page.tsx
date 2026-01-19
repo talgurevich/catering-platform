@@ -133,6 +133,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                         src={product.image_url}
                         alt={product.name_he}
                         fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         className="object-cover group-hover:scale-110 transition-transform duration-500"
                       />
                     ) : (

@@ -174,6 +174,7 @@ export default async function EventsPage() {
                         src={bundle.image_url}
                         alt={bundle.name_he}
                         fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         className="object-cover group-hover:scale-110 transition-transform duration-500"
                       />
                     ) : (

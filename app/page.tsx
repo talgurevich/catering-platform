@@ -62,6 +62,8 @@ export default async function Home() {
             src="/images/bg2.jpg"
             alt="Background"
             fill
+            sizes="100vw"
+            quality={60}
             className="object-cover"
             style={{ filter: 'blur(6px) brightness(0.4)' }}
           />

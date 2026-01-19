@@ -69,6 +69,7 @@ export default async function BundlePage({ params }: BundlePageProps) {
                   src={bundle.image_url}
                   alt={bundle.name_he}
                   fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover"
                   priority
                 />

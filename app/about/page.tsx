@@ -68,11 +68,12 @@ export default function AboutPage() {
               </div>
             </div>
             <div className="relative">
-              <div className="aspect-square bg-gradient-to-br from-yellow-100 to-orange-100 rounded-3xl overflow-hidden shadow-2xl">
+              <div className="aspect-square bg-gradient-to-br from-yellow-100 to-orange-100 rounded-3xl overflow-hidden shadow-2xl relative">
                 <Image
                   src="/images/about-store.jpg"
                   alt="תחנת הלחם עכו"
                   fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover"
                 />
               </div>
