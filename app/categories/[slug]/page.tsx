@@ -50,7 +50,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           <div className="absolute bottom-10 left-20 w-96 h-96 bg-blue-400 rounded-full filter blur-3xl"></div>
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-28">
           <Link
             href="/"
             className="inline-flex items-center text-gray-300 hover:text-yellow-400 mb-6 transition-colors group"
